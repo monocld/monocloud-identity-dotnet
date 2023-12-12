@@ -1,0 +1,22 @@
+using System;
+using System.Collections.Generic;
+
+namespace MonoCloud.SDK.UsersBackend.Models;
+
+/// <summary>
+/// The External Authenticator Disconnect Request class.
+/// </summary>
+public class ExternalAuthenticatorDisconnectRequest
+{
+   /// <summary>
+   /// External Authenticator to be disconnected
+   /// </summary>
+   public ExternalAuthenticators Authenticator { get; set; } = default;
+
+   /// <summary>
+   /// Provider User Id of the external authenticator.
+   /// </summary>
+   public string ProviderUserId { get; set; } = string.Empty;
+}
+
+
