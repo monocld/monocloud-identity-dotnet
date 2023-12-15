@@ -11,7 +11,7 @@ public class DisableUserRequest
    /// <summary>
    /// Specifies whether to revoke all sessions associated with the user.
    /// </summary>
-   public bool RevokeSessions { get; set; } = false;
+   public bool? RevokeSessions { get; set; }
 }
 
 

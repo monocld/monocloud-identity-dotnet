@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Web;
 using MonoCloud.SDK.Core.Base;
 using MonoCloud.SDK.Core.Exception;
+using MonoCloud.SDK.Core.Helpers;
 using MonoCloud.SDK.UsersBackend.Models;
 
 namespace MonoCloud.SDK.UsersBackend.Clients;
@@ -47,7 +48,7 @@ public class UsersClient : MonoCloudClientBase
   /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
   /// <returns>List&lt;UserSummary&gt;</returns>
   /// <exception cref="MonoCloudException">A server side error occurred.</exception>
-  public Task<MonoCloudResponse<List<UserSummary>>> GetAllUsers(int? page = 1, int? size = 10, string? filter = default, string? sort = default, CancellationToken cancellationToken = default)
+  public Task<MonoCloudResponse<List<UserSummary>, PageModel>> GetAllUsersAsync(int? page = 1, int? size = 10, string? filter = default, string? sort = default, CancellationToken cancellationToken = default)
   { 
     var urlBuilder = new StringBuilder();
     urlBuilder.Append("users?");
@@ -84,7 +85,7 @@ public class UsersClient : MonoCloudClientBase
       }
     };
 
-    return ProcessRequestAsync<List<UserSummary>>(request, cancellationToken);
+    return ProcessRequestAsync<List<UserSummary>, PageModel>(request, cancellationToken);
   }
 
   /// <summary>
@@ -94,7 +95,7 @@ public class UsersClient : MonoCloudClientBase
   /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
   /// <returns>User</returns>
   /// <exception cref="MonoCloudException">A server side error occurred.</exception>
-  public Task<MonoCloudResponse<User>> CreateUser(CreateUserRequest createUserRequest, CancellationToken cancellationToken = default)
+  public Task<MonoCloudResponse<User>> CreateUserAsync(CreateUserRequest createUserRequest, CancellationToken cancellationToken = default)
   { 
     if (createUserRequest == null)
     {
@@ -127,7 +128,7 @@ public class UsersClient : MonoCloudClientBase
   /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
   /// <returns>UserWithAccessDetails</returns>
   /// <exception cref="MonoCloudException">A server side error occurred.</exception>
-  public Task<MonoCloudResponse<UserWithAccessDetails>> FindUserById(string userId, CancellationToken cancellationToken = default)
+  public Task<MonoCloudResponse<UserWithAccessDetails>> FindUserByIdAsync(string userId, CancellationToken cancellationToken = default)
   { 
     if (userId == null)
     {
@@ -161,7 +162,7 @@ public class UsersClient : MonoCloudClientBase
   /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
   /// <returns></returns>
   /// <exception cref="MonoCloudException">A server side error occurred.</exception>
-  public Task<MonoCloudResponse> DeleteUser(string userId, CancellationToken cancellationToken = default)
+  public Task<MonoCloudResponse> DeleteUserAsync(string userId, CancellationToken cancellationToken = default)
   { 
     if (userId == null)
     {
@@ -191,7 +192,7 @@ public class UsersClient : MonoCloudClientBase
   /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
   /// <returns>User</returns>
   /// <exception cref="MonoCloudException">A server side error occurred.</exception>
-  public Task<MonoCloudResponse<User>> EnableUser(string userId, CancellationToken cancellationToken = default)
+  public Task<MonoCloudResponse<User>> EnableUserAsync(string userId, CancellationToken cancellationToken = default)
   { 
     if (userId == null)
     {
@@ -226,7 +227,7 @@ public class UsersClient : MonoCloudClientBase
   /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
   /// <returns>User</returns>
   /// <exception cref="MonoCloudException">A server side error occurred.</exception>
-  public Task<MonoCloudResponse<User>> DisableUser(string userId, DisableUserRequest disableUserRequest, CancellationToken cancellationToken = default)
+  public Task<MonoCloudResponse<User>> DisableUserAsync(string userId, DisableUserRequest disableUserRequest, CancellationToken cancellationToken = default)
   { 
     if (userId == null)
     {
@@ -266,7 +267,7 @@ public class UsersClient : MonoCloudClientBase
   /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
   /// <returns>User</returns>
   /// <exception cref="MonoCloudException">A server side error occurred.</exception>
-  public Task<MonoCloudResponse<User>> UnblockUser(string userId, CancellationToken cancellationToken = default)
+  public Task<MonoCloudResponse<User>> UnblockUserAsync(string userId, CancellationToken cancellationToken = default)
   { 
     if (userId == null)
     {
@@ -301,7 +302,7 @@ public class UsersClient : MonoCloudClientBase
   /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
   /// <returns>User</returns>
   /// <exception cref="MonoCloudException">A server side error occurred.</exception>
-  public Task<MonoCloudResponse<User>> SetPrimaryEmail(string userId, string identifierId, CancellationToken cancellationToken = default)
+  public Task<MonoCloudResponse<User>> SetPrimaryEmailAsync(string userId, string identifierId, CancellationToken cancellationToken = default)
   { 
     if (userId == null)
     {
@@ -343,7 +344,7 @@ public class UsersClient : MonoCloudClientBase
   /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
   /// <returns>User</returns>
   /// <exception cref="MonoCloudException">A server side error occurred.</exception>
-  public Task<MonoCloudResponse<User>> SetEmailVerifiedEndpoint(string userId, string identifierId, CancellationToken cancellationToken = default)
+  public Task<MonoCloudResponse<User>> SetEmailVerifiedEndpointAsync(string userId, string identifierId, CancellationToken cancellationToken = default)
   { 
     if (userId == null)
     {
@@ -385,7 +386,7 @@ public class UsersClient : MonoCloudClientBase
   /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
   /// <returns>User</returns>
   /// <exception cref="MonoCloudException">A server side error occurred.</exception>
-  public Task<MonoCloudResponse<User>> SetPrimaryPhone(string userId, string identifierId, CancellationToken cancellationToken = default)
+  public Task<MonoCloudResponse<User>> SetPrimaryPhoneAsync(string userId, string identifierId, CancellationToken cancellationToken = default)
   { 
     if (userId == null)
     {
@@ -427,7 +428,7 @@ public class UsersClient : MonoCloudClientBase
   /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
   /// <returns>User</returns>
   /// <exception cref="MonoCloudException">A server side error occurred.</exception>
-  public Task<MonoCloudResponse<User>> SetPhoneVerifiedEndpoint(string userId, string identifierId, CancellationToken cancellationToken = default)
+  public Task<MonoCloudResponse<User>> SetPhoneVerifiedEndpointAsync(string userId, string identifierId, CancellationToken cancellationToken = default)
   { 
     if (userId == null)
     {
@@ -468,7 +469,7 @@ public class UsersClient : MonoCloudClientBase
   /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
   /// <returns>UserPrivateData</returns>
   /// <exception cref="MonoCloudException">A server side error occurred.</exception>
-  public Task<MonoCloudResponse<UserPrivateData>> GetPrivateData(string userId, CancellationToken cancellationToken = default)
+  public Task<MonoCloudResponse<UserPrivateData>> GetPrivateDataAsync(string userId, CancellationToken cancellationToken = default)
   { 
     if (userId == null)
     {
@@ -503,7 +504,7 @@ public class UsersClient : MonoCloudClientBase
   /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
   /// <returns>UserPrivateData</returns>
   /// <exception cref="MonoCloudException">A server side error occurred.</exception>
-  public Task<MonoCloudResponse<UserPrivateData>> PatchPrivateData(string userId, UpdatePrivateDataRequest updatePrivateDataRequest, CancellationToken cancellationToken = default)
+  public Task<MonoCloudResponse<UserPrivateData>> PatchPrivateDataAsync(string userId, UpdatePrivateDataRequest updatePrivateDataRequest, CancellationToken cancellationToken = default)
   { 
     if (userId == null)
     {
@@ -543,7 +544,7 @@ public class UsersClient : MonoCloudClientBase
   /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
   /// <returns>UserPublicData</returns>
   /// <exception cref="MonoCloudException">A server side error occurred.</exception>
-  public Task<MonoCloudResponse<UserPublicData>> GetPublicData(string userId, CancellationToken cancellationToken = default)
+  public Task<MonoCloudResponse<UserPublicData>> GetPublicDataAsync(string userId, CancellationToken cancellationToken = default)
   { 
     if (userId == null)
     {
@@ -578,7 +579,7 @@ public class UsersClient : MonoCloudClientBase
   /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
   /// <returns>UserPublicData</returns>
   /// <exception cref="MonoCloudException">A server side error occurred.</exception>
-  public Task<MonoCloudResponse<UserPublicData>> PatchPublicData(string userId, UpdatePublicDataRequest updatePublicDataRequest, CancellationToken cancellationToken = default)
+  public Task<MonoCloudResponse<UserPublicData>> PatchPublicDataAsync(string userId, UpdatePublicDataRequest updatePublicDataRequest, CancellationToken cancellationToken = default)
   { 
     if (userId == null)
     {
@@ -622,7 +623,7 @@ public class UsersClient : MonoCloudClientBase
   /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
   /// <returns>List&lt;UserIpAccessDetails&gt;</returns>
   /// <exception cref="MonoCloudException">A server side error occurred.</exception>
-  public Task<MonoCloudResponse<List<UserIpAccessDetails>>> GetAllBlockedIps(string userId, int? page = 1, int? size = 10, string? filter = default, string? sort = default, CancellationToken cancellationToken = default)
+  public Task<MonoCloudResponse<List<UserIpAccessDetails>, PageModel>> GetAllBlockedIpsAsync(string userId, int? page = 1, int? size = 10, string? filter = default, string? sort = default, CancellationToken cancellationToken = default)
   { 
     if (userId == null)
     {
@@ -666,7 +667,7 @@ public class UsersClient : MonoCloudClientBase
       }
     };
 
-    return ProcessRequestAsync<List<UserIpAccessDetails>>(request, cancellationToken);
+    return ProcessRequestAsync<List<UserIpAccessDetails>, PageModel>(request, cancellationToken);
   }
 
   /// <summary>
@@ -677,7 +678,7 @@ public class UsersClient : MonoCloudClientBase
   /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
   /// <returns>User</returns>
   /// <exception cref="MonoCloudException">A server side error occurred.</exception>
-  public Task<MonoCloudResponse<User>> UnblockIp(string userId, UnblockIpRequest unblockIpRequest, CancellationToken cancellationToken = default)
+  public Task<MonoCloudResponse<User>> UnblockIpAsync(string userId, UnblockIpRequest unblockIpRequest, CancellationToken cancellationToken = default)
   { 
     if (userId == null)
     {
@@ -721,7 +722,7 @@ public class UsersClient : MonoCloudClientBase
   /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
   /// <returns>List&lt;UserSession&gt;</returns>
   /// <exception cref="MonoCloudException">A server side error occurred.</exception>
-  public Task<MonoCloudResponse<List<UserSession>>> GetAllUserSessions(string userId, int? page = 1, int? size = 10, string? filter = default, string? sort = default, CancellationToken cancellationToken = default)
+  public Task<MonoCloudResponse<List<UserSession>, PageModel>> GetAllUserSessionsAsync(string userId, int? page = 1, int? size = 10, string? filter = default, string? sort = default, CancellationToken cancellationToken = default)
   { 
     if (userId == null)
     {
@@ -765,7 +766,7 @@ public class UsersClient : MonoCloudClientBase
       }
     };
 
-    return ProcessRequestAsync<List<UserSession>>(request, cancellationToken);
+    return ProcessRequestAsync<List<UserSession>, PageModel>(request, cancellationToken);
   }
 
   /// <summary>
@@ -776,7 +777,7 @@ public class UsersClient : MonoCloudClientBase
   /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
   /// <returns></returns>
   /// <exception cref="MonoCloudException">A server side error occurred.</exception>
-  public Task<MonoCloudResponse> RevokeUserSession(string userId, string sessionId, CancellationToken cancellationToken = default)
+  public Task<MonoCloudResponse> RevokeUserSessionAsync(string userId, string sessionId, CancellationToken cancellationToken = default)
   { 
     if (userId == null)
     {
@@ -814,7 +815,7 @@ public class UsersClient : MonoCloudClientBase
   /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
   /// <returns>User</returns>
   /// <exception cref="MonoCloudException">A server side error occurred.</exception>
-  public Task<MonoCloudResponse<User>> ExternalAuthenticatorDisconnectEndpoint(string userId, ExternalAuthenticatorDisconnectRequest externalAuthenticatorDisconnectRequest, CancellationToken cancellationToken = default)
+  public Task<MonoCloudResponse<User>> ExternalAuthenticatorDisconnectEndpointAsync(string userId, ExternalAuthenticatorDisconnectRequest externalAuthenticatorDisconnectRequest, CancellationToken cancellationToken = default)
   { 
     if (userId == null)
     {

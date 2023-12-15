@@ -1,5 +1,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoCloud.SDK.UsersBackend", "src/MonoCloud.SDK.UsersBackend.csproj", "{915F7AAB-ABE9-4560-A017-321F1C83F548}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoCloud.SDK.UsersBackend", "src/MonoCloud.SDK.UsersBackend.csproj", "{ED67722C-B283-441B-8A17-D34FF702F1B3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoCloud.SDK.UsersBackend.UnitTests", "tests/MonoCloud.SDK.UsersBackend.UnitTests/MonoCloud.SDK.UsersBackend.UnitTests.csproj", "{E88E31E3-EA66-46E6-9A32-11D1753A54B1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -7,9 +9,13 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{915F7AAB-ABE9-4560-A017-321F1C83F548}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{915F7AAB-ABE9-4560-A017-321F1C83F548}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{915F7AAB-ABE9-4560-A017-321F1C83F548}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{915F7AAB-ABE9-4560-A017-321F1C83F548}.Release|Any CPU.Build.0 = Release|Any CPU
+    {ED67722C-B283-441B-8A17-D34FF702F1B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+    {ED67722C-B283-441B-8A17-D34FF702F1B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+    {ED67722C-B283-441B-8A17-D34FF702F1B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+    {ED67722C-B283-441B-8A17-D34FF702F1B3}.Release|Any CPU.Build.0 = Release|Any CPU
+    {E88E31E3-EA66-46E6-9A32-11D1753A54B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+    {E88E31E3-EA66-46E6-9A32-11D1753A54B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+    {E88E31E3-EA66-46E6-9A32-11D1753A54B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+    {E88E31E3-EA66-46E6-9A32-11D1753A54B1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -22,7 +22,7 @@ public static class MonoCloudUsersBackendServiceExtensions
 
     if (configuration is not null)
     {
-      var monocloudSection = configuration.GetSection("MonoCloud");
+      var monocloudSection = configuration.GetSection("MonoCloud").GetSection("UsersBackend");
       domain = monocloudSection["Domain"];
       apiKey = monocloudSection["ApiKey"];
 

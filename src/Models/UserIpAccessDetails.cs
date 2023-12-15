@@ -16,7 +16,7 @@ public class UserIpAccessDetails
    /// <summary>
    /// Specifies the time upto which the user is blocked.
    /// </summary>
-   public long? BlockUntil { get; set; }
+   public DateTime? BlockUntil { get; set; }
 
    /// <summary>
    /// Total number of sign-in attempts.
@@ -31,7 +31,7 @@ public class UserIpAccessDetails
    /// <summary>
    /// Specifies the time (in Epoch) at which the last sign in attempt was made.
    /// </summary>
-   public long LastLoginAttempt { get; set; }
+   public DateTime LastLoginAttempt { get; set; }
 }
 
 

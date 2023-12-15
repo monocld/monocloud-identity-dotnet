@@ -51,12 +51,12 @@ public class User
    /// <summary>
    /// Specifies the creation time of the user (in Epoch)
    /// </summary>
-   public long CreationTime { get; set; }
+   public DateTime CreationTime { get; set; }
 
    /// <summary>
    /// Specifies the last update time of the user (in Epoch)
    /// </summary>
-   public long LastUpdated { get; set; }
+   public DateTime LastUpdated { get; set; }
 
    /// <summary>
    /// Registered username of the user.
@@ -71,7 +71,7 @@ public class User
    /// <summary>
    /// Specifies the time (in Epoch) of last password update.
    /// </summary>
-   public long? PasswordUpdatedAt { get; set; }
+   public DateTime? PasswordUpdatedAt { get; set; }
 }
 
 

@@ -26,17 +26,17 @@ public class UserSession
    /// <summary>
    /// The initial time when the session was created
    /// </summary>
-   public long InitiatedAt { get; set; }
+   public DateTime InitiatedAt { get; set; }
 
    /// <summary>
    /// The expiration time of the session
    /// </summary>
-   public long ExpiresAt { get; set; }
+   public DateTime ExpiresAt { get; set; }
 
    /// <summary>
    /// The last updated time
    /// </summary>
-   public long LastUpdated { get; set; }
+   public DateTime LastUpdated { get; set; }
 
    /// <summary>
    /// The last session metadata

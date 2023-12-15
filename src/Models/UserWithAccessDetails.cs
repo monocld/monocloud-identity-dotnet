@@ -51,12 +51,12 @@ public class UserWithAccessDetails
    /// <summary>
    /// Specifies the creation time of the user (in Epoch)
    /// </summary>
-   public long CreationTime { get; set; }
+   public DateTime CreationTime { get; set; }
 
    /// <summary>
    /// Specifies the last update time of the user (in Epoch)
    /// </summary>
-   public long LastUpdated { get; set; }
+   public DateTime LastUpdated { get; set; }
 
    /// <summary>
    /// Registered username of the user.
@@ -71,7 +71,7 @@ public class UserWithAccessDetails
    /// <summary>
    /// Specifies the time (in Epoch) of last password update.
    /// </summary>
-   public long? PasswordUpdatedAt { get; set; }
+   public DateTime? PasswordUpdatedAt { get; set; }
 
    /// <summary>
    /// Total number of sign-in attempts.
@@ -86,7 +86,7 @@ public class UserWithAccessDetails
    /// <summary>
    /// Specifies the time (in Epoch) at which the last sign in attempt was made.
    /// </summary>
-   public long? LastSignInAttempt { get; set; }
+   public DateTime? LastSignInAttempt { get; set; }
 
    /// <summary>
    /// Specifies whether the user has been locked out.

@@ -320,6 +320,4 @@ dotnet_naming_style.begins_with_i.required_suffix =
 dotnet_naming_style.begins_with_i.word_separator =
 dotnet_naming_style.begins_with_i.capitalization = pascal_case
 
-# Diagnostics
-
-dotnet_diagnostic.CS8618.severity = none
+dotnet_diagnostic.IDE0005.severity = error
