@@ -302,7 +302,7 @@ public class UsersClient : MonoCloudClientBase
   /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
   /// <returns>User</returns>
   /// <exception cref="MonoCloudException">A server side error occurred.</exception>
-  public Task<MonoCloudResponse<User>> SetPrimaryEmailAsync(string userId, string identifierId, CancellationToken cancellationToken = default)
+  public Task<MonoCloudResponse<User>> SetPrimaryEmailAsync(string userId, Guid identifierId, CancellationToken cancellationToken = default)
   { 
     if (userId == null)
     {
@@ -316,7 +316,7 @@ public class UsersClient : MonoCloudClientBase
     
     var encodedUserId = HttpUtility.UrlEncode(userId);
 
-    var encodedIdentifierId = HttpUtility.UrlEncode(identifierId);
+    var encodedIdentifierId = HttpUtility.UrlEncode(identifierId.ToString());
 
     var urlBuilder = new StringBuilder();
     urlBuilder.Append($"users/{encodedUserId}/emails/{encodedIdentifierId}/primary?");
@@ -344,7 +344,7 @@ public class UsersClient : MonoCloudClientBase
   /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
   /// <returns>User</returns>
   /// <exception cref="MonoCloudException">A server side error occurred.</exception>
-  public Task<MonoCloudResponse<User>> SetEmailVerifiedEndpointAsync(string userId, string identifierId, CancellationToken cancellationToken = default)
+  public Task<MonoCloudResponse<User>> SetEmailVerifiedEndpointAsync(string userId, Guid identifierId, CancellationToken cancellationToken = default)
   { 
     if (userId == null)
     {
@@ -358,7 +358,7 @@ public class UsersClient : MonoCloudClientBase
     
     var encodedUserId = HttpUtility.UrlEncode(userId);
 
-    var encodedIdentifierId = HttpUtility.UrlEncode(identifierId);
+    var encodedIdentifierId = HttpUtility.UrlEncode(identifierId.ToString());
 
     var urlBuilder = new StringBuilder();
     urlBuilder.Append($"users/{encodedUserId}/emails/{encodedIdentifierId}/verify?");
@@ -386,7 +386,7 @@ public class UsersClient : MonoCloudClientBase
   /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
   /// <returns>User</returns>
   /// <exception cref="MonoCloudException">A server side error occurred.</exception>
-  public Task<MonoCloudResponse<User>> SetPrimaryPhoneAsync(string userId, string identifierId, CancellationToken cancellationToken = default)
+  public Task<MonoCloudResponse<User>> SetPrimaryPhoneAsync(string userId, Guid identifierId, CancellationToken cancellationToken = default)
   { 
     if (userId == null)
     {
@@ -400,7 +400,7 @@ public class UsersClient : MonoCloudClientBase
     
     var encodedUserId = HttpUtility.UrlEncode(userId);
 
-    var encodedIdentifierId = HttpUtility.UrlEncode(identifierId);
+    var encodedIdentifierId = HttpUtility.UrlEncode(identifierId.ToString());
 
     var urlBuilder = new StringBuilder();
     urlBuilder.Append($"users/{encodedUserId}/phones/{encodedIdentifierId}/primary?");
@@ -428,7 +428,7 @@ public class UsersClient : MonoCloudClientBase
   /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
   /// <returns>User</returns>
   /// <exception cref="MonoCloudException">A server side error occurred.</exception>
-  public Task<MonoCloudResponse<User>> SetPhoneVerifiedEndpointAsync(string userId, string identifierId, CancellationToken cancellationToken = default)
+  public Task<MonoCloudResponse<User>> SetPhoneVerifiedEndpointAsync(string userId, Guid identifierId, CancellationToken cancellationToken = default)
   { 
     if (userId == null)
     {
@@ -442,7 +442,7 @@ public class UsersClient : MonoCloudClientBase
     
     var encodedUserId = HttpUtility.UrlEncode(userId);
 
-    var encodedIdentifierId = HttpUtility.UrlEncode(identifierId);
+    var encodedIdentifierId = HttpUtility.UrlEncode(identifierId.ToString());
 
     var urlBuilder = new StringBuilder();
     urlBuilder.Append($"users/{encodedUserId}/phones/{encodedIdentifierId}/verify?");
