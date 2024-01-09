@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Net;
 using System.Text;
+using System.Text.Json;
 
 namespace MonoCloud.SDK.UsersBackend.UnitTests;
 
@@ -222,6 +223,76 @@ public class SDKTests
       Assert.Equal("Invalid Name", mcError.Errors.First().Value.Single());
       Assert.Equal("password", mcError.Errors.Last().Key);
       Assert.Equal("Invalid Password", mcError.Errors.Last().Value.Single());
+    }
+  }
+
+  [Fact]
+  public async Task Internal_server_error_should_handle_correctly()
+  {
+    const string response = """
+    {
+      "type": "https://httpstatuses.io/500",
+      "title": "Internal Server Error",
+      "status": 500,
+      "detail": "Internal Server Error Detail",
+      "traceId": "00-b2ceddefca0cf958ed678f144872e3c7-d0b2da5c8fe32598-01"
+    }
+    """;
+
+    _httpMessageHandlerMock.SetupRequest(_ => Task.FromResult(true)).ReturnsResponse(HttpStatusCode.InternalServerError, new StringContent(response, Encoding.UTF8, "application/problem+json"));
+
+    try
+    {
+      await _usersClient.CreateUserAsync(new CreateUserRequest());
+      throw new Exception("Invalid");
+    }
+    catch (Exception e)
+    {
+      Assert.True(e is MonoCloudServerException);
+      var mcError = (e as MonoCloudServerException)!;
+      Assert.NotNull(mcError.Response);
+      Assert.Equal("Internal Server Error", mcError.Message);
+      Assert.Equal("Internal Server Error Detail", mcError.Response.Detail);
+      Assert.Equal("Internal Server Error", mcError.Response.Title);
+      Assert.Equal("https://httpstatuses.io/500", mcError.Response.Type);
+      Assert.Equal(500, mcError.Response.Status);
+      var traceIdJsonElement = (JsonElement)mcError.Response.ExtensionData["traceId"];
+      Assert.Equal("00-b2ceddefca0cf958ed678f144872e3c7-d0b2da5c8fe32598-01", traceIdJsonElement.GetString());
+    }
+  }
+
+  [Fact]
+  public async Task Bad_request_error_should_handle_correctly()
+  {
+    const string response = """
+    {
+      "type": "https://httpstatuses.io/400",
+      "title": "Bad Request",
+      "status": 400,
+      "detail": "Bad Request Detail",
+      "traceId": "00-2e0cd141be28223b233dd3907cbe58b4-2ba9f9375b4b78e0-01"
+    }
+    """;
+
+    _httpMessageHandlerMock.SetupRequest(_ => Task.FromResult(true)).ReturnsResponse(HttpStatusCode.MethodNotAllowed, new StringContent(response, Encoding.UTF8, "application/problem+json"));
+
+    try
+    {
+      await _usersClient.CreateUserAsync(new CreateUserRequest());
+      throw new Exception("Invalid");
+    }
+    catch (Exception e)
+    {
+      Assert.True(e is MonoCloudBadRequestException);
+      var mcError = (e as MonoCloudBadRequestException)!;
+      Assert.NotNull(mcError.Response);
+      Assert.Equal("Bad Request", mcError.Message);
+      Assert.Equal("Bad Request Detail", mcError.Response.Detail);
+      Assert.Equal("Bad Request", mcError.Response.Title);
+      Assert.Equal("https://httpstatuses.io/400", mcError.Response.Type);
+      Assert.Equal(400, mcError.Response.Status);
+      var traceIdJsonElement = (JsonElement)mcError.Response.ExtensionData["traceId"];
+      Assert.Equal("00-2e0cd141be28223b233dd3907cbe58b4-2ba9f9375b4b78e0-01", traceIdJsonElement.GetString());
     }
   }
 
