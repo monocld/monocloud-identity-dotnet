@@ -379,6 +379,48 @@ public class UsersClient : MonoCloudClientBase
   }
 
   /// <summary>
+  /// Enables the Email Authenticator for a user&#39;s email
+  /// </summary>
+  /// <param name="userId">User Id</param>
+  /// <param name="identifierId">The Id of the email for which the email authenticator should be enabled.</param>
+  /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
+  /// <returns>User</returns>
+  /// <exception cref="MonoCloudException">A server side error occurred.</exception>
+  public Task<MonoCloudResponse<User>> EnableEmailAuthenticatorAsync(string userId, Guid identifierId, CancellationToken cancellationToken = default)
+  { 
+    if (userId == null)
+    {
+      throw new ArgumentNullException(nameof(userId));
+    }
+    
+    if (identifierId == null)
+    {
+      throw new ArgumentNullException(nameof(identifierId));
+    }
+    
+    var encodedUserId = HttpUtility.UrlEncode(userId);
+
+    var encodedIdentifierId = HttpUtility.UrlEncode(identifierId.ToString());
+
+    var urlBuilder = new StringBuilder();
+    urlBuilder.Append($"users/{encodedUserId}/emails/{encodedIdentifierId}/email_authenticator/enable?");
+
+    urlBuilder.Length--;
+
+    var request = new HttpRequestMessage
+    {
+      Method = new HttpMethod("POST"),
+      RequestUri = new Uri(urlBuilder.ToString(), UriKind.RelativeOrAbsolute),
+      Headers =
+      {
+        { "Accept", "application/json" }
+      }
+    };
+
+    return ProcessRequestAsync<User>(request, cancellationToken);
+  }
+
+  /// <summary>
   /// Set a user&#39;s primary phone
   /// </summary>
   /// <param name="userId">User Id</param>
@@ -446,6 +488,48 @@ public class UsersClient : MonoCloudClientBase
 
     var urlBuilder = new StringBuilder();
     urlBuilder.Append($"users/{encodedUserId}/phones/{encodedIdentifierId}/verify?");
+
+    urlBuilder.Length--;
+
+    var request = new HttpRequestMessage
+    {
+      Method = new HttpMethod("POST"),
+      RequestUri = new Uri(urlBuilder.ToString(), UriKind.RelativeOrAbsolute),
+      Headers =
+      {
+        { "Accept", "application/json" }
+      }
+    };
+
+    return ProcessRequestAsync<User>(request, cancellationToken);
+  }
+
+  /// <summary>
+  /// Enables the Phone Authenticator for a user&#39;s phone
+  /// </summary>
+  /// <param name="userId">User Id</param>
+  /// <param name="identifierId">The Id of the phone for which the phone authenticator should be enabled.</param>
+  /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
+  /// <returns>User</returns>
+  /// <exception cref="MonoCloudException">A server side error occurred.</exception>
+  public Task<MonoCloudResponse<User>> EnablePhoneAuthenticatorAsync(string userId, Guid identifierId, CancellationToken cancellationToken = default)
+  { 
+    if (userId == null)
+    {
+      throw new ArgumentNullException(nameof(userId));
+    }
+    
+    if (identifierId == null)
+    {
+      throw new ArgumentNullException(nameof(identifierId));
+    }
+    
+    var encodedUserId = HttpUtility.UrlEncode(userId);
+
+    var encodedIdentifierId = HttpUtility.UrlEncode(identifierId.ToString());
+
+    var urlBuilder = new StringBuilder();
+    urlBuilder.Append($"users/{encodedUserId}/phones/{encodedIdentifierId}/phone_authenticator/enable?");
 
     urlBuilder.Length--;
 
