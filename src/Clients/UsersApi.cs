@@ -295,7 +295,7 @@ public class UsersClient : MonoCloudClientBase
   }
 
   /// <summary>
-  /// Set a user&#39;s primary email
+  /// Set email as primary
   /// </summary>
   /// <param name="userId">User Id</param>
   /// <param name="identifierId">The Id of the email to be set a primary.</param>
@@ -337,7 +337,7 @@ public class UsersClient : MonoCloudClientBase
   }
 
   /// <summary>
-  /// Marks the specified email as verified.
+  /// Mark email as verified
   /// </summary>
   /// <param name="userId">User Id</param>
   /// <param name="identifierId">The Id of the email to be marked as verified.</param>
@@ -379,49 +379,7 @@ public class UsersClient : MonoCloudClientBase
   }
 
   /// <summary>
-  /// Enables the Email Authenticator for a user&#39;s email
-  /// </summary>
-  /// <param name="userId">User Id</param>
-  /// <param name="identifierId">The Id of the email for which the email authenticator should be enabled.</param>
-  /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
-  /// <returns>User</returns>
-  /// <exception cref="MonoCloudException">A server side error occurred.</exception>
-  public Task<MonoCloudResponse<User>> EnableEmailAuthenticatorAsync(string userId, Guid identifierId, CancellationToken cancellationToken = default)
-  { 
-    if (userId == null)
-    {
-      throw new ArgumentNullException(nameof(userId));
-    }
-    
-    if (identifierId == null)
-    {
-      throw new ArgumentNullException(nameof(identifierId));
-    }
-    
-    var encodedUserId = HttpUtility.UrlEncode(userId);
-
-    var encodedIdentifierId = HttpUtility.UrlEncode(identifierId.ToString());
-
-    var urlBuilder = new StringBuilder();
-    urlBuilder.Append($"users/{encodedUserId}/emails/{encodedIdentifierId}/email_authenticator/enable?");
-
-    urlBuilder.Length--;
-
-    var request = new HttpRequestMessage
-    {
-      Method = new HttpMethod("POST"),
-      RequestUri = new Uri(urlBuilder.ToString(), UriKind.RelativeOrAbsolute),
-      Headers =
-      {
-        { "Accept", "application/json" }
-      }
-    };
-
-    return ProcessRequestAsync<User>(request, cancellationToken);
-  }
-
-  /// <summary>
-  /// Set a user&#39;s primary phone
+  /// Set phone as primary
   /// </summary>
   /// <param name="userId">User Id</param>
   /// <param name="identifierId">The Id of the phone to be set a primary.</param>
@@ -463,7 +421,7 @@ public class UsersClient : MonoCloudClientBase
   }
 
   /// <summary>
-  /// Marks the specified phone as verified.
+  /// Mark phone as verified
   /// </summary>
   /// <param name="userId">User Id</param>
   /// <param name="identifierId">The Id of the phone to be set verified.</param>
@@ -505,49 +463,7 @@ public class UsersClient : MonoCloudClientBase
   }
 
   /// <summary>
-  /// Enables the Phone Authenticator for a user&#39;s phone
-  /// </summary>
-  /// <param name="userId">User Id</param>
-  /// <param name="identifierId">The Id of the phone for which the phone authenticator should be enabled.</param>
-  /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
-  /// <returns>User</returns>
-  /// <exception cref="MonoCloudException">A server side error occurred.</exception>
-  public Task<MonoCloudResponse<User>> EnablePhoneAuthenticatorAsync(string userId, Guid identifierId, CancellationToken cancellationToken = default)
-  { 
-    if (userId == null)
-    {
-      throw new ArgumentNullException(nameof(userId));
-    }
-    
-    if (identifierId == null)
-    {
-      throw new ArgumentNullException(nameof(identifierId));
-    }
-    
-    var encodedUserId = HttpUtility.UrlEncode(userId);
-
-    var encodedIdentifierId = HttpUtility.UrlEncode(identifierId.ToString());
-
-    var urlBuilder = new StringBuilder();
-    urlBuilder.Append($"users/{encodedUserId}/phones/{encodedIdentifierId}/phone_authenticator/enable?");
-
-    urlBuilder.Length--;
-
-    var request = new HttpRequestMessage
-    {
-      Method = new HttpMethod("POST"),
-      RequestUri = new Uri(urlBuilder.ToString(), UriKind.RelativeOrAbsolute),
-      Headers =
-      {
-        { "Accept", "application/json" }
-      }
-    };
-
-    return ProcessRequestAsync<User>(request, cancellationToken);
-  }
-
-  /// <summary>
-  /// Get a user&#39;s private data
+  /// Get user private data
   /// </summary>
   /// <param name="userId">User Id</param>
   /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
@@ -581,7 +497,7 @@ public class UsersClient : MonoCloudClientBase
   }
 
   /// <summary>
-  /// Updates fields for the user&#39;s private data
+  /// Update user private data
   /// </summary>
   /// <param name="userId">User Id</param>
   /// <param name="updatePrivateDataRequest">Data to be updated</param>
@@ -622,7 +538,7 @@ public class UsersClient : MonoCloudClientBase
   }
 
   /// <summary>
-  /// Get a user&#39;s public data
+  /// Get user public data
   /// </summary>
   /// <param name="userId">User Id</param>
   /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
@@ -656,7 +572,7 @@ public class UsersClient : MonoCloudClientBase
   }
 
   /// <summary>
-  /// Updates fields for the user&#39;s public data
+  /// Update user public data
   /// </summary>
   /// <param name="userId">User Id</param>
   /// <param name="updatePublicDataRequest">Data to be updated</param>
@@ -697,7 +613,7 @@ public class UsersClient : MonoCloudClientBase
   }
 
   /// <summary>
-  /// Get a list of blocked ips
+  /// Get all blocked ips
   /// </summary>
   /// <param name="userId">User Id</param>
   /// <param name="page">Page Number</param>
@@ -796,7 +712,7 @@ public class UsersClient : MonoCloudClientBase
   }
 
   /// <summary>
-  /// Get all sessions for the specified user
+  /// Get all sessions
   /// </summary>
   /// <param name="userId">User Id</param>
   /// <param name="page">Page Number</param>
@@ -854,7 +770,7 @@ public class UsersClient : MonoCloudClientBase
   }
 
   /// <summary>
-  /// Revoke a user session
+  /// Revoke a session
   /// </summary>
   /// <param name="userId">User Id</param>
   /// <param name="sessionId">Session Id</param>
@@ -892,7 +808,7 @@ public class UsersClient : MonoCloudClientBase
   }
 
   /// <summary>
-  /// Disconnect an External Authenticator from a user
+  /// Disconnect External Authenticator
   /// </summary>
   /// <param name="userId">User Id</param>
   /// <param name="externalAuthenticatorDisconnectRequest">Idp disconnect data</param>
