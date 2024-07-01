@@ -298,7 +298,7 @@ public class UsersClient : MonoCloudClientBase
   /// Set email as primary
   /// </summary>
   /// <param name="userId">User Id</param>
-  /// <param name="identifierId">The Id of the email to be set a primary.</param>
+  /// <param name="identifierId">The Id of the email to be set as primary.</param>
   /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
   /// <returns>User</returns>
   /// <exception cref="MonoCloudException">A server side error occurred.</exception>
@@ -344,7 +344,7 @@ public class UsersClient : MonoCloudClientBase
   /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
   /// <returns>User</returns>
   /// <exception cref="MonoCloudException">A server side error occurred.</exception>
-  public Task<MonoCloudResponse<User>> SetEmailVerifiedEndpointAsync(string userId, Guid identifierId, CancellationToken cancellationToken = default)
+  public Task<MonoCloudResponse<User>> SetEmailVerifiedAsync(string userId, Guid identifierId, CancellationToken cancellationToken = default)
   { 
     if (userId == null)
     {
@@ -382,7 +382,7 @@ public class UsersClient : MonoCloudClientBase
   /// Set phone as primary
   /// </summary>
   /// <param name="userId">User Id</param>
-  /// <param name="identifierId">The Id of the phone to be set a primary.</param>
+  /// <param name="identifierId">The Id of the phone to be set as primary.</param>
   /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
   /// <returns>User</returns>
   /// <exception cref="MonoCloudException">A server side error occurred.</exception>
@@ -424,11 +424,11 @@ public class UsersClient : MonoCloudClientBase
   /// Mark phone as verified
   /// </summary>
   /// <param name="userId">User Id</param>
-  /// <param name="identifierId">The Id of the phone to be set verified.</param>
+  /// <param name="identifierId">The Id of the phone to be marked as verified.</param>
   /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
   /// <returns>User</returns>
   /// <exception cref="MonoCloudException">A server side error occurred.</exception>
-  public Task<MonoCloudResponse<User>> SetPhoneVerifiedEndpointAsync(string userId, Guid identifierId, CancellationToken cancellationToken = default)
+  public Task<MonoCloudResponse<User>> SetPhoneVerifiedAsync(string userId, Guid identifierId, CancellationToken cancellationToken = default)
   { 
     if (userId == null)
     {
@@ -815,7 +815,7 @@ public class UsersClient : MonoCloudClientBase
   /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
   /// <returns>User</returns>
   /// <exception cref="MonoCloudException">A server side error occurred.</exception>
-  public Task<MonoCloudResponse<User>> ExternalAuthenticatorDisconnectEndpointAsync(string userId, ExternalAuthenticatorDisconnectRequest externalAuthenticatorDisconnectRequest, CancellationToken cancellationToken = default)
+  public Task<MonoCloudResponse<User>> ExternalAuthenticatorDisconnectAsync(string userId, ExternalAuthenticatorDisconnectRequest externalAuthenticatorDisconnectRequest, CancellationToken cancellationToken = default)
   { 
     if (userId == null)
     {
