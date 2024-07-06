@@ -717,12 +717,12 @@ public class UsersClient : MonoCloudClientBase
   /// <param name="userId">User Id</param>
   /// <param name="page">Page Number</param>
   /// <param name="size">Page Size</param>
-  /// <param name="filter">Client Id by which the user sessions needs to be filtered.</param>
+  /// <param name="clientId">Client Id by which the user sessions needs to be filtered.</param>
   /// <param name="sort">Value in &#39;sort_key:sort_order&#39; format, by which results will be sorted. Sort order value can be &#39;1&#39; for ascending and &#39;-1&#39; for descending.  Acceptable sort key values are &#39;session_id&#39;, &#39;initiated_at&#39;, &#39;expires_at&#39; and &#39;last_updated&#39;</param>
   /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
   /// <returns>List&lt;UserSession&gt;</returns>
   /// <exception cref="MonoCloudException">A server side error occurred.</exception>
-  public Task<MonoCloudResponse<List<UserSession>, PageModel>> GetAllUserSessionsAsync(string userId, int? page = 1, int? size = 10, string? filter = default, string? sort = default, CancellationToken cancellationToken = default)
+  public Task<MonoCloudResponse<List<UserSession>, PageModel>> GetAllUserSessionsAsync(string userId, int? page = 1, int? size = 10, string? clientId = default, string? sort = default, CancellationToken cancellationToken = default)
   { 
     if (userId == null)
     {
@@ -744,9 +744,9 @@ public class UsersClient : MonoCloudClientBase
       urlBuilder.Append(Uri.EscapeDataString("size") + "=").Append(HttpUtility.UrlEncode(size.ToString())).Append("&");
     }
 
-    if (filter != null)
+    if (clientId != null)
     {
-      urlBuilder.Append(Uri.EscapeDataString("filter") + "=").Append(HttpUtility.UrlEncode(filter)).Append("&");
+      urlBuilder.Append(Uri.EscapeDataString("clientId") + "=").Append(HttpUtility.UrlEncode(clientId)).Append("&");
     }
 
     if (sort != null)
