@@ -44,6 +44,11 @@ public class User
    public List<UserPhone> PhoneNumbers { get; set; }
 
    /// <summary>
+   /// Passkey
+   /// </summary>
+   public List<UserPasskey> Passkeys { get; set; }
+
+   /// <summary>
    /// List of registered idps of user
    /// </summary>
    public List<UserIdP> Idps { get; set; }

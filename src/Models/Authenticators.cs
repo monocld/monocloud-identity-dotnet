@@ -11,6 +11,8 @@ public enum Authenticators
 
     Phone,
 
+    Passkey,
+
     Google,
 
     Apple,
