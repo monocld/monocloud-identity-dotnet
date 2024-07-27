@@ -7,6 +7,8 @@ public enum Authenticators
 {
     Password,
 
+    Passkey,
+
     Email,
 
     Phone,
@@ -27,7 +29,9 @@ public enum Authenticators
 
     Twitter,
 
-    Linkedin
+    Linkedin,
+
+    Xero
 }
 
 
