@@ -808,6 +808,44 @@ public class UsersClient : MonoCloudClientBase
   }
 
   /// <summary>
+  /// Remove Passkey
+  /// </summary>
+  /// <param name="userId">User Id</param>
+  /// <param name="passkeyId">The passkey id of the passkey to remove</param>
+  /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
+  /// <returns></returns>
+  /// <exception cref="MonoCloudException">A server side error occurred.</exception>
+  public Task<MonoCloudResponse> RemovePasskeyAsync(string userId, string passkeyId, CancellationToken cancellationToken = default)
+  { 
+    if (userId == null)
+    {
+      throw new ArgumentNullException(nameof(userId));
+    }
+    
+    if (passkeyId == null)
+    {
+      throw new ArgumentNullException(nameof(passkeyId));
+    }
+    
+    var encodedUserId = HttpUtility.UrlEncode(userId);
+
+    var encodedPasskeyId = HttpUtility.UrlEncode(passkeyId);
+
+    var urlBuilder = new StringBuilder();
+    urlBuilder.Append($"users/{encodedUserId}/passkeys/{encodedPasskeyId}?");
+
+    urlBuilder.Length--;
+
+    var request = new HttpRequestMessage
+    {
+      Method = new HttpMethod("DELETE"),
+      RequestUri = new Uri(urlBuilder.ToString(), UriKind.RelativeOrAbsolute),
+    };
+
+    return ProcessRequestAsync(request, cancellationToken);
+  }
+
+  /// <summary>
   /// Disconnect External Authenticator
   /// </summary>
   /// <param name="userId">User Id</param>

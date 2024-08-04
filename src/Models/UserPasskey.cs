@@ -9,11 +9,6 @@ namespace MonoCloud.SDK.UsersBackend.Models;
 public class UserPasskey
 {
    /// <summary>
-   /// Unique identifier of the passkey
-   /// </summary>
-   public Guid Id { get; set; }
-
-   /// <summary>
    /// A human-readable name for the passkey
    /// </summary>
    public string? Name { get; set; }
