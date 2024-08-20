@@ -11,9 +11,9 @@ using System.Web;
 using MonoCloud.SDK.Core.Base;
 using MonoCloud.SDK.Core.Exception;
 using MonoCloud.SDK.Core.Helpers;
-using MonoCloud.SDK.UsersBackend.Models;
+using MonoCloud.SDK.Identity.Models;
 
-namespace MonoCloud.SDK.UsersBackend.Clients;
+namespace MonoCloud.SDK.Identity.Clients;
 
 /// <summary>
 /// Represents a collection of functions to interact with the Users Api endpoints
@@ -884,6 +884,292 @@ public class UsersClient : MonoCloudClientBase
     };
 
     return ProcessRequestAsync<User>(request, cancellationToken);
+  }
+
+  /// <summary>
+  /// Gets all Groups a user is assigned to
+  /// </summary>
+  /// <param name="userId">User Id</param>
+  /// <param name="page">Page Number</param>
+  /// <param name="size">Page Size</param>
+  /// <param name="sort">Value in &#39;sort_key:sort_order&#39; format, by which results will be sorted. Sort order value can be &#39;1&#39; for ascending and &#39;-1&#39; for descending.  Acceptable sort key value is &#39;creation_time&#39;</param>
+  /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
+  /// <returns>List&lt;UserGroup&gt;</returns>
+  /// <exception cref="MonoCloudException">A server side error occurred.</exception>
+  public Task<MonoCloudResponse<List<UserGroup>, PageModel>> GetAllUserGroupsAsync(string userId, int? page = 1, int? size = 10, string? sort = default, CancellationToken cancellationToken = default)
+  { 
+    if (userId == null)
+    {
+      throw new ArgumentNullException(nameof(userId));
+    }
+    
+    var encodedUserId = HttpUtility.UrlEncode(userId);
+
+    var urlBuilder = new StringBuilder();
+    urlBuilder.Append($"users/{encodedUserId}/groups?");
+
+    if (page != null)
+    {
+      urlBuilder.Append(Uri.EscapeDataString("page") + "=").Append(HttpUtility.UrlEncode(page.ToString())).Append("&");
+    }
+
+    if (size != null)
+    {
+      urlBuilder.Append(Uri.EscapeDataString("size") + "=").Append(HttpUtility.UrlEncode(size.ToString())).Append("&");
+    }
+
+    if (sort != null)
+    {
+      urlBuilder.Append(Uri.EscapeDataString("sort") + "=").Append(HttpUtility.UrlEncode(sort)).Append("&");
+    }
+
+    urlBuilder.Length--;
+
+    var request = new HttpRequestMessage
+    {
+      Method = new HttpMethod("GET"),
+      RequestUri = new Uri(urlBuilder.ToString(), UriKind.RelativeOrAbsolute),
+      Headers =
+      {
+        { "Accept", "application/json" }
+      }
+    };
+
+    return ProcessRequestAsync<List<UserGroup>, PageModel>(request, cancellationToken);
+  }
+
+  /// <summary>
+  /// Finds a User Group by Id
+  /// </summary>
+  /// <param name="userId">User Id</param>
+  /// <param name="groupId">Group Id</param>
+  /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
+  /// <returns>UserGroup</returns>
+  /// <exception cref="MonoCloudException">A server side error occurred.</exception>
+  public Task<MonoCloudResponse<UserGroup>> FindUserGroupAsync(string userId, Guid groupId, CancellationToken cancellationToken = default)
+  { 
+    if (userId == null)
+    {
+      throw new ArgumentNullException(nameof(userId));
+    }
+    
+    if (groupId == null)
+    {
+      throw new ArgumentNullException(nameof(groupId));
+    }
+    
+    var encodedUserId = HttpUtility.UrlEncode(userId);
+
+    var encodedGroupId = HttpUtility.UrlEncode(groupId.ToString());
+
+    var urlBuilder = new StringBuilder();
+    urlBuilder.Append($"users/{encodedUserId}/groups/{encodedGroupId}?");
+
+    urlBuilder.Length--;
+
+    var request = new HttpRequestMessage
+    {
+      Method = new HttpMethod("GET"),
+      RequestUri = new Uri(urlBuilder.ToString(), UriKind.RelativeOrAbsolute),
+      Headers =
+      {
+        { "Accept", "application/json" }
+      }
+    };
+
+    return ProcessRequestAsync<UserGroup>(request, cancellationToken);
+  }
+
+  /// <summary>
+  /// Assigns a user to a group
+  /// </summary>
+  /// <param name="userId">User Id</param>
+  /// <param name="groupId">Group Id</param>
+  /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
+  /// <returns></returns>
+  /// <exception cref="MonoCloudException">A server side error occurred.</exception>
+  public Task<MonoCloudResponse> AssignUserToGroupAsync(string userId, Guid groupId, CancellationToken cancellationToken = default)
+  { 
+    if (userId == null)
+    {
+      throw new ArgumentNullException(nameof(userId));
+    }
+    
+    if (groupId == null)
+    {
+      throw new ArgumentNullException(nameof(groupId));
+    }
+    
+    var encodedUserId = HttpUtility.UrlEncode(userId);
+
+    var encodedGroupId = HttpUtility.UrlEncode(groupId.ToString());
+
+    var urlBuilder = new StringBuilder();
+    urlBuilder.Append($"users/{encodedUserId}/groups/{encodedGroupId}?");
+
+    urlBuilder.Length--;
+
+    var request = new HttpRequestMessage
+    {
+      Method = new HttpMethod("POST"),
+      RequestUri = new Uri(urlBuilder.ToString(), UriKind.RelativeOrAbsolute),
+    };
+
+    return ProcessRequestAsync(request, cancellationToken);
+  }
+
+  /// <summary>
+  /// Remove a user from a group
+  /// </summary>
+  /// <param name="userId">User Id</param>
+  /// <param name="groupId">Group Id</param>
+  /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
+  /// <returns></returns>
+  /// <exception cref="MonoCloudException">A server side error occurred.</exception>
+  public Task<MonoCloudResponse> RemoveUserFromGroupAsync(string userId, Guid groupId, CancellationToken cancellationToken = default)
+  { 
+    if (userId == null)
+    {
+      throw new ArgumentNullException(nameof(userId));
+    }
+    
+    if (groupId == null)
+    {
+      throw new ArgumentNullException(nameof(groupId));
+    }
+    
+    var encodedUserId = HttpUtility.UrlEncode(userId);
+
+    var encodedGroupId = HttpUtility.UrlEncode(groupId.ToString());
+
+    var urlBuilder = new StringBuilder();
+    urlBuilder.Append($"users/{encodedUserId}/groups/{encodedGroupId}?");
+
+    urlBuilder.Length--;
+
+    var request = new HttpRequestMessage
+    {
+      Method = new HttpMethod("DELETE"),
+      RequestUri = new Uri(urlBuilder.ToString(), UriKind.RelativeOrAbsolute),
+    };
+
+    return ProcessRequestAsync(request, cancellationToken);
+  }
+
+  /// <summary>
+  /// Get all Users assigned to a Group
+  /// </summary>
+  /// <param name="groupId">Group Id</param>
+  /// <param name="page">Page Number</param>
+  /// <param name="size">Page Size</param>
+  /// <param name="filter">Value by which the users needs to be filtered.</param>
+  /// <param name="sort">Value in &#39;sort_key:sort_order&#39; format, by which results will be sorted. Sort order value can be &#39;1&#39; for ascending and &#39;-1&#39; for descending.  Acceptable sort key values are &#39;given_name&#39;, &#39;middle_name&#39;, &#39;family_name&#39;, &#39;name&#39;, &#39;creation_time&#39;, and &#39;last_updated&#39;</param>
+  /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
+  /// <returns>List&lt;UserSummary&gt;</returns>
+  /// <exception cref="MonoCloudException">A server side error occurred.</exception>
+  public Task<MonoCloudResponse<List<UserSummary>, PageModel>> GetAllGroupAssignedUsersAsync(Guid groupId, int? page = 1, int? size = 10, string? filter = default, string? sort = default, CancellationToken cancellationToken = default)
+  { 
+    if (groupId == null)
+    {
+      throw new ArgumentNullException(nameof(groupId));
+    }
+    
+    var encodedGroupId = HttpUtility.UrlEncode(groupId.ToString());
+
+    var urlBuilder = new StringBuilder();
+    urlBuilder.Append($"users/groups/{encodedGroupId}/assigned?");
+
+    if (page != null)
+    {
+      urlBuilder.Append(Uri.EscapeDataString("page") + "=").Append(HttpUtility.UrlEncode(page.ToString())).Append("&");
+    }
+
+    if (size != null)
+    {
+      urlBuilder.Append(Uri.EscapeDataString("size") + "=").Append(HttpUtility.UrlEncode(size.ToString())).Append("&");
+    }
+
+    if (filter != null)
+    {
+      urlBuilder.Append(Uri.EscapeDataString("filter") + "=").Append(HttpUtility.UrlEncode(filter)).Append("&");
+    }
+
+    if (sort != null)
+    {
+      urlBuilder.Append(Uri.EscapeDataString("sort") + "=").Append(HttpUtility.UrlEncode(sort)).Append("&");
+    }
+
+    urlBuilder.Length--;
+
+    var request = new HttpRequestMessage
+    {
+      Method = new HttpMethod("GET"),
+      RequestUri = new Uri(urlBuilder.ToString(), UriKind.RelativeOrAbsolute),
+      Headers =
+      {
+        { "Accept", "application/json" }
+      }
+    };
+
+    return ProcessRequestAsync<List<UserSummary>, PageModel>(request, cancellationToken);
+  }
+
+  /// <summary>
+  /// Get all Users not assigned to a Group
+  /// </summary>
+  /// <param name="groupId">Group Id</param>
+  /// <param name="page">Page Number</param>
+  /// <param name="size">Page Size</param>
+  /// <param name="filter">Value by which the users needs to be filtered.</param>
+  /// <param name="sort">Value in &#39;sort_key:sort_order&#39; format, by which results will be sorted. Sort order value can be &#39;1&#39; for ascending and &#39;-1&#39; for descending.  Acceptable sort key values are &#39;given_name&#39;, &#39;middle_name&#39;, &#39;family_name&#39;, &#39;name&#39;, &#39;creation_time&#39;, and &#39;last_updated&#39;</param>
+  /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
+  /// <returns>List&lt;UserSummary&gt;</returns>
+  /// <exception cref="MonoCloudException">A server side error occurred.</exception>
+  public Task<MonoCloudResponse<List<UserSummary>, PageModel>> GetAllGroupUnassignedUsersAsync(Guid groupId, int? page = 1, int? size = 10, string? filter = default, string? sort = default, CancellationToken cancellationToken = default)
+  { 
+    if (groupId == null)
+    {
+      throw new ArgumentNullException(nameof(groupId));
+    }
+    
+    var encodedGroupId = HttpUtility.UrlEncode(groupId.ToString());
+
+    var urlBuilder = new StringBuilder();
+    urlBuilder.Append($"users/groups/{encodedGroupId}/unassigned?");
+
+    if (page != null)
+    {
+      urlBuilder.Append(Uri.EscapeDataString("page") + "=").Append(HttpUtility.UrlEncode(page.ToString())).Append("&");
+    }
+
+    if (size != null)
+    {
+      urlBuilder.Append(Uri.EscapeDataString("size") + "=").Append(HttpUtility.UrlEncode(size.ToString())).Append("&");
+    }
+
+    if (filter != null)
+    {
+      urlBuilder.Append(Uri.EscapeDataString("filter") + "=").Append(HttpUtility.UrlEncode(filter)).Append("&");
+    }
+
+    if (sort != null)
+    {
+      urlBuilder.Append(Uri.EscapeDataString("sort") + "=").Append(HttpUtility.UrlEncode(sort)).Append("&");
+    }
+
+    urlBuilder.Length--;
+
+    var request = new HttpRequestMessage
+    {
+      Method = new HttpMethod("GET"),
+      RequestUri = new Uri(urlBuilder.ToString(), UriKind.RelativeOrAbsolute),
+      Headers =
+      {
+        { "Accept", "application/json" }
+      }
+    };
+
+    return ProcessRequestAsync<List<UserSummary>, PageModel>(request, cancellationToken);
   }
 }
 

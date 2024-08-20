@@ -1,5 +1,5 @@
 using MonoCloud.SDK.Core.Exception;
-using MonoCloud.SDK.UsersBackend.Models;
+using MonoCloud.SDK.Identity.Models;
 using Moq;
 using Moq.Contrib.HttpClient;
 using Newtonsoft.Json;
@@ -8,20 +8,20 @@ using System.Net;
 using System.Text;
 using System.Text.Json;
 
-namespace MonoCloud.SDK.UsersBackend.UnitTests;
+namespace MonoCloud.SDK.Identity.UnitTests;
 
 public class SDKTests
 {
   private readonly Mock<HttpMessageHandler> _httpMessageHandlerMock;
   private Dictionary<string, object> _requestMessage = new();
-  private readonly MonoCloudUsersBackendClient _usersClient;
+  private readonly MonoCloudIdentityClient _identityClient;
 
   public SDKTests()
   {
     _httpMessageHandlerMock = new Mock<HttpMessageHandler>(MockBehavior.Strict);
     var httpClient = _httpMessageHandlerMock.CreateClient();
     httpClient.BaseAddress = new Uri("https://mock.com");
-    _usersClient = new MonoCloudUsersBackendClient(httpClient);
+    _identityClient = new MonoCloudIdentityClient(httpClient);
   }
 
   [Fact]
@@ -29,7 +29,7 @@ public class SDKTests
   {
     SetMockResponse(new CreateUserRequest());
 
-    await _usersClient.CreateUserAsync(new CreateUserRequest()
+    await _identityClient.Users.CreateUserAsync(new CreateUserRequest()
     {
       Name = "user"
     });
@@ -44,7 +44,7 @@ public class SDKTests
   {
     SetMockResponse(new ExternalAuthenticatorDisconnectRequest());
 
-    await _usersClient.ExternalAuthenticatorDisconnectAsync("user", new ExternalAuthenticatorDisconnectRequest
+    await _identityClient.Users.ExternalAuthenticatorDisconnectAsync("user", new ExternalAuthenticatorDisconnectRequest
     {
       Authenticator = ExternalAuthenticators.Apple
     });
@@ -59,7 +59,7 @@ public class SDKTests
   {
     SetMockResponse(new UserPrivateData());
 
-    await _usersClient.PatchPrivateDataAsync("1234", new UpdatePrivateDataRequest
+    await _identityClient.Users.PatchPrivateDataAsync("1234", new UpdatePrivateDataRequest
     {
       PrivateData = new Dictionary<string, object>
       {
@@ -83,7 +83,7 @@ public class SDKTests
       creation_time = now
     });
 
-    var result = await _usersClient.FindUserByIdAsync("user");
+    var result = await _identityClient.Users.FindUserByIdAsync("user");
 
     Assert.NotNull(result);
     Assert.Equivalent(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddSeconds(now), result.Data.CreationTime);
@@ -97,7 +97,7 @@ public class SDKTests
       password_updated_at = (long?)null
     });
 
-    var result = await _usersClient.FindUserByIdAsync("user");
+    var result = await _identityClient.Users.FindUserByIdAsync("user");
 
     Assert.Null(result.Data.PasswordUpdatedAt);
   }
@@ -114,7 +114,7 @@ public class SDKTests
       { "x-Pagination", """{"total_count":20,"page_size":2,"current_page":3,"has_next":true,"has_previous":true}""" }
     });
 
-    var result = await _usersClient.GetAllUsersAsync();
+    var result = await _identityClient.Users.GetAllUsersAsync();
 
     Assert.Equal(2, result.Data.Count);
     Assert.Equal(20, result.PageData.TotalCount);
@@ -133,7 +133,7 @@ public class SDKTests
       new()
     });
 
-    var result = await _usersClient.GetAllUsersAsync();
+    var result = await _identityClient.Users.GetAllUsersAsync();
 
     Assert.Equal(2, result.Data.Count);
     Assert.Equal(0, result.PageData.TotalCount);
@@ -173,7 +173,7 @@ public class SDKTests
 
     try
     {
-      await _usersClient.CreateUserAsync(new CreateUserRequest());
+      await _identityClient.Users.CreateUserAsync(new CreateUserRequest());
       throw new Exception("Invalid");
     }
     catch (Exception e)
@@ -209,7 +209,7 @@ public class SDKTests
 
     try
     {
-      await _usersClient.CreateUserAsync(new CreateUserRequest());
+      await _identityClient.Users.CreateUserAsync(new CreateUserRequest());
       throw new Exception("Invalid");
     }
     catch (Exception e)
@@ -243,7 +243,7 @@ public class SDKTests
 
     try
     {
-      await _usersClient.CreateUserAsync(new CreateUserRequest());
+      await _identityClient.Users.CreateUserAsync(new CreateUserRequest());
       throw new Exception("Invalid");
     }
     catch (Exception e)
@@ -278,7 +278,7 @@ public class SDKTests
 
     try
     {
-      await _usersClient.CreateUserAsync(new CreateUserRequest());
+      await _identityClient.Users.CreateUserAsync(new CreateUserRequest());
       throw new Exception("Invalid");
     }
     catch (Exception e)

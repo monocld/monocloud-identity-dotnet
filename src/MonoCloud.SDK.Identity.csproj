@@ -1,24 +1,24 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <RootNamespace>MonoCloud.SDK.UsersBackend</RootNamespace>
+    <RootNamespace>MonoCloud.SDK.Identity</RootNamespace>
     <TargetFrameworks Condition="'$(LibraryFrameworks)'==''">net8.0;net7.0;net6.0;netstandard2.0</TargetFrameworks>
     <LangVersion>10.0</LangVersion>
     <Nullable>enable</Nullable>
     <SignAssembly>true</SignAssembly>
-    <PackageId>MonoCloud.SDK.UsersBackend</PackageId>
-    <Version>0.1.5</Version>
+    <PackageId>MonoCloud.SDK.Identity</PackageId>
+    <Version>0.1.6</Version>
     <Company>MonoCloud</Company>
-    <Product>MonoCloud.SDK.UsersBackend</Product>
-    <AssemblyName>MonoCloud.SDK.UsersBackend</AssemblyName>
+    <Product>MonoCloud.SDK.Identity</Product>
+    <AssemblyName>MonoCloud.SDK.Identity</AssemblyName>
     <AssemblyVersion>0.0.1</AssemblyVersion>
     <FileVersion>0.0.1</FileVersion>
-    <Title>MonoCloud Users Backend DotNet SDK</Title>
+    <Title>MonoCloud Identity DotNet SDK</Title>
     <Authors>MonoCloud</Authors>
-    <Description>MonoCloud Users Backend DotNet SDK</Description>
+    <Description>MonoCloud Identity DotNet SDK</Description>
     <Copyright>MonoCloud</Copyright>
     <PackageProjectUrl>https://www.monocloud.com</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/MonoCld/monocloud-users-backend-dotnet</RepositoryUrl>
+    <RepositoryUrl>https://github.com/MonoCld/monocloud-identity-dotnet</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>monocloud</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>

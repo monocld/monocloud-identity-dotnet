@@ -1,7 +1,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoCloud.SDK.UsersBackend", "src/MonoCloud.SDK.UsersBackend.csproj", "{ED67722C-B283-441B-8A17-D34FF702F1B3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoCloud.SDK.Identity", "src/MonoCloud.SDK.Identity.csproj", "{ED67722C-B283-441B-8A17-D34FF702F1B3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoCloud.SDK.UsersBackend.UnitTests", "tests/MonoCloud.SDK.UsersBackend.UnitTests/MonoCloud.SDK.UsersBackend.UnitTests.csproj", "{E88E31E3-EA66-46E6-9A32-11D1753A54B1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoCloud.SDK.Identity.UnitTests", "tests/MonoCloud.SDK.Identity.UnitTests/MonoCloud.SDK.Identity.UnitTests.csproj", "{E88E31E3-EA66-46E6-9A32-11D1753A54B1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

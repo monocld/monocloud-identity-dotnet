@@ -4,17 +4,17 @@ using MonoCloud.SDK.Core.Base;
 using System;
 using System.Net.Http;
 
-namespace MonoCloud.SDK.UsersBackend;
+namespace MonoCloud.SDK.Identity;
 
-public static class MonoCloudUsersBackendServiceExtensions
+public static class MonoCloudIdentityServiceExtensions
 {
-  public static IServiceCollection AddMonoCloudUsersBackendClient(this IServiceCollection services, IConfiguration configuration) =>
-    services.AddMonoCloudUsersBackendClient(configuration, null);
+  public static IServiceCollection AddMonoCloudIdentityClient(this IServiceCollection services, IConfiguration configuration) =>
+    services.AddMonoCloudIdentityClient(configuration, null);
 
-  public static IServiceCollection AddMonoCloudUsersBackendClient(this IServiceCollection services, Action<MonoCloudUsersBackendOptions> options) =>
-    services.AddMonoCloudUsersBackendClient(null, options);
+  public static IServiceCollection AddMonoCloudIdentityClient(this IServiceCollection services, Action<MonoCloudIdentityOptions> options) =>
+    services.AddMonoCloudIdentityClient(null, options);
 
-  public static IServiceCollection AddMonoCloudUsersBackendClient(this IServiceCollection services, IConfiguration? configuration, Action<MonoCloudUsersBackendOptions>? options)
+  public static IServiceCollection AddMonoCloudIdentityClient(this IServiceCollection services, IConfiguration? configuration, Action<MonoCloudIdentityOptions>? options)
   {
     string? domain = null;
     string? apiKey = null;
@@ -22,7 +22,7 @@ public static class MonoCloudUsersBackendServiceExtensions
 
     if (configuration is not null)
     {
-      var monocloudSection = configuration.GetSection("MonoCloud").GetSection("UsersBackend");
+      var monocloudSection = configuration.GetSection("MonoCloud").GetSection("Identity");
       domain = monocloudSection["Domain"];
       apiKey = monocloudSection["ApiKey"];
 
@@ -34,7 +34,7 @@ public static class MonoCloudUsersBackendServiceExtensions
 
     if (options is not null)
     {
-      var settings = new MonoCloudUsersBackendOptions();
+      var settings = new MonoCloudIdentityOptions();
       options.Invoke(settings);
 
       if (settings.Domain is not null)
@@ -55,17 +55,17 @@ public static class MonoCloudUsersBackendServiceExtensions
 
     if (domain is null || string.IsNullOrEmpty(domain))
     {
-      throw new ArgumentNullException(nameof(MonoCloudUsersBackendOptions.Domain), "The domain for the MonoCloud UsersBackend client has not been set.");
+      throw new ArgumentNullException(nameof(MonoCloudIdentityOptions.Domain), "The domain for the MonoCloud Identity client has not been set.");
     }
 
     if (apiKey is null || string.IsNullOrEmpty(apiKey))
     {
-      throw new ArgumentNullException(nameof(MonoCloudUsersBackendOptions.ApiKey), "The api key for the MonoCloud UsersBackend client has not been set.");
+      throw new ArgumentNullException(nameof(MonoCloudIdentityOptions.ApiKey), "The api key for the MonoCloud Identity client has not been set.");
     }
 
     var config = new MonoCloudConfig(domain, apiKey, timeout.HasValue ? TimeSpan.FromSeconds(timeout.Value) : null);
 
-    var clientName = "MonoCloudUsersBackendClient";
+    var clientName = "MonoCloudIdentityClient";
 
     services.AddHttpClient(clientName)
       .ConfigureHttpClient(client =>
@@ -79,7 +79,7 @@ public static class MonoCloudUsersBackendServiceExtensions
     {
       var factory = s.GetRequiredService<IHttpClientFactory>();
       var client = factory.CreateClient(clientName);
-      return new MonoCloudUsersBackendClient(client);
+      return new MonoCloudIdentityClient(client);
     });
 
     return services;

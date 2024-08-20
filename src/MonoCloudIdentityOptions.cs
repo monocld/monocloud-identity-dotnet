@@ -1,8 +1,8 @@
 using System;
 
-namespace MonoCloud.SDK.UsersBackend;
+namespace MonoCloud.SDK.Identity;
 
-public class MonoCloudUsersBackendOptions
+public class MonoCloudIdentityOptions
 {
   public string? Domain { get; set; }
   public string? ApiKey { get; set; }

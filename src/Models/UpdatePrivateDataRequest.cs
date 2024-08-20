@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace MonoCloud.SDK.UsersBackend.Models;
+namespace MonoCloud.SDK.Identity.Models;
 
 /// <summary>
 /// The Update Private Data Request class.

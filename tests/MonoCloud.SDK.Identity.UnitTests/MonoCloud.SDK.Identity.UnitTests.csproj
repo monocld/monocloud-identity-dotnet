@@ -24,7 +24,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\src\MonoCloud.SDK.UsersBackend.csproj" />
+      <ProjectReference Include="..\..\src\MonoCloud.SDK.Identity.csproj" />
     </ItemGroup>
 
 </Project>
