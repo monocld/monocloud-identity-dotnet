@@ -808,7 +808,7 @@ public class UsersClient : MonoCloudClientBase
   }
 
   /// <summary>
-  /// Remove Passkey
+  /// Remove passkey
   /// </summary>
   /// <param name="userId">User Id</param>
   /// <param name="passkeyId">The passkey id of the passkey to remove</param>
@@ -846,7 +846,7 @@ public class UsersClient : MonoCloudClientBase
   }
 
   /// <summary>
-  /// Disconnect External Authenticator
+  /// Disconnect external authenticator
   /// </summary>
   /// <param name="userId">User Id</param>
   /// <param name="externalAuthenticatorDisconnectRequest">Idp disconnect data</param>
@@ -887,7 +887,7 @@ public class UsersClient : MonoCloudClientBase
   }
 
   /// <summary>
-  /// Gets all Groups a user is assigned to
+  /// Get all user&#39;s groups
   /// </summary>
   /// <param name="userId">User Id</param>
   /// <param name="page">Page Number</param>
@@ -939,7 +939,7 @@ public class UsersClient : MonoCloudClientBase
   }
 
   /// <summary>
-  /// Finds a User Group by Id
+  /// Get a user group
   /// </summary>
   /// <param name="userId">User Id</param>
   /// <param name="groupId">Group Id</param>
@@ -981,7 +981,7 @@ public class UsersClient : MonoCloudClientBase
   }
 
   /// <summary>
-  /// Assigns a user to a group
+  /// Assign user to group
   /// </summary>
   /// <param name="userId">User Id</param>
   /// <param name="groupId">Group Id</param>
@@ -1019,7 +1019,7 @@ public class UsersClient : MonoCloudClientBase
   }
 
   /// <summary>
-  /// Remove a user from a group
+  /// Remove user from group
   /// </summary>
   /// <param name="userId">User Id</param>
   /// <param name="groupId">Group Id</param>
@@ -1057,7 +1057,7 @@ public class UsersClient : MonoCloudClientBase
   }
 
   /// <summary>
-  /// Get all Users assigned to a Group
+  /// Get all users in group
   /// </summary>
   /// <param name="groupId">Group Id</param>
   /// <param name="page">Page Number</param>
@@ -1078,64 +1078,6 @@ public class UsersClient : MonoCloudClientBase
 
     var urlBuilder = new StringBuilder();
     urlBuilder.Append($"users/groups/{encodedGroupId}/assigned?");
-
-    if (page != null)
-    {
-      urlBuilder.Append(Uri.EscapeDataString("page") + "=").Append(HttpUtility.UrlEncode(page.ToString())).Append("&");
-    }
-
-    if (size != null)
-    {
-      urlBuilder.Append(Uri.EscapeDataString("size") + "=").Append(HttpUtility.UrlEncode(size.ToString())).Append("&");
-    }
-
-    if (filter != null)
-    {
-      urlBuilder.Append(Uri.EscapeDataString("filter") + "=").Append(HttpUtility.UrlEncode(filter)).Append("&");
-    }
-
-    if (sort != null)
-    {
-      urlBuilder.Append(Uri.EscapeDataString("sort") + "=").Append(HttpUtility.UrlEncode(sort)).Append("&");
-    }
-
-    urlBuilder.Length--;
-
-    var request = new HttpRequestMessage
-    {
-      Method = new HttpMethod("GET"),
-      RequestUri = new Uri(urlBuilder.ToString(), UriKind.RelativeOrAbsolute),
-      Headers =
-      {
-        { "Accept", "application/json" }
-      }
-    };
-
-    return ProcessRequestAsync<List<UserSummary>, PageModel>(request, cancellationToken);
-  }
-
-  /// <summary>
-  /// Get all Users not assigned to a Group
-  /// </summary>
-  /// <param name="groupId">Group Id</param>
-  /// <param name="page">Page Number</param>
-  /// <param name="size">Page Size</param>
-  /// <param name="filter">Value by which the users needs to be filtered.</param>
-  /// <param name="sort">Value in &#39;sort_key:sort_order&#39; format, by which results will be sorted. Sort order value can be &#39;1&#39; for ascending and &#39;-1&#39; for descending.  Acceptable sort key values are &#39;given_name&#39;, &#39;middle_name&#39;, &#39;family_name&#39;, &#39;name&#39;, &#39;creation_time&#39;, and &#39;last_updated&#39;</param>
-  /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
-  /// <returns>List&lt;UserSummary&gt;</returns>
-  /// <exception cref="MonoCloudException">A server side error occurred.</exception>
-  public Task<MonoCloudResponse<List<UserSummary>, PageModel>> GetAllGroupUnassignedUsersAsync(Guid groupId, int? page = 1, int? size = 10, string? filter = default, string? sort = default, CancellationToken cancellationToken = default)
-  { 
-    if (groupId == null)
-    {
-      throw new ArgumentNullException(nameof(groupId));
-    }
-    
-    var encodedGroupId = HttpUtility.UrlEncode(groupId.ToString());
-
-    var urlBuilder = new StringBuilder();
-    urlBuilder.Append($"users/groups/{encodedGroupId}/unassigned?");
 
     if (page != null)
     {
