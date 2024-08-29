@@ -14,7 +14,7 @@ public class UserSession
    public string SessionKey { get; set; }
 
    /// <summary>
-   /// The unique identifier of the session
+   /// The unique ID of the session
    /// </summary>
    public string SessionId { get; set; }
 

@@ -41,10 +41,10 @@ public class GroupsClient : MonoCloudClientBase
   /// <summary>
   /// Get all groups
   /// </summary>
-  /// <param name="page">Page Number</param>
-  /// <param name="size">Page Size</param>
-  /// <param name="filter">Value by which the groups needs to be filtered.</param>
-  /// <param name="sort">Value in &#39;sort_key:sort_order&#39; format, by which results will be sorted. Sort order value can be &#39;1&#39; for ascending and &#39;-1&#39; for descending.  Acceptable sort key values are &#39;type&#39;, &#39;name&#39;, &#39;clients_assigned&#39;, &#39;users_assigned&#39;, &#39;last_assigned&#39;, &#39;creation_time&#39;, and &#39;last_updated&#39;</param>
+  /// <param name="page">The page number to retrieve.</param>
+  /// <param name="size">The number of items per page.</param>
+  /// <param name="filter">A query filter to apply when searching for groups.</param>
+  /// <param name="sort">Specifies the sort criteria in the &#39;sort_key:sort_order&#39; format. The sort order value can be &#39;1&#39; for ascending and &#39;-1&#39; for descending.  Acceptable sort key values are &#39;name&#39;, &#39;type&#39;, &#39;clients_assigned&#39;, &#39;users_assigned&#39;, &#39;last_assigned&#39;, &#39;creation_time&#39;, and &#39;last_updated&#39;.</param>
   /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
   /// <returns>List&lt;Group&gt;</returns>
   /// <exception cref="MonoCloudException">A server side error occurred.</exception>
@@ -91,7 +91,7 @@ public class GroupsClient : MonoCloudClientBase
   /// <summary>
   /// Create a group
   /// </summary>
-  /// <param name="createGroupRequest">Group&#39;s data</param>
+  /// <param name="createGroupRequest">The create group request.</param>
   /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
   /// <returns>Group</returns>
   /// <exception cref="MonoCloudException">A server side error occurred.</exception>
@@ -124,7 +124,7 @@ public class GroupsClient : MonoCloudClientBase
   /// <summary>
   /// Get a group
   /// </summary>
-  /// <param name="groupId">Group Id</param>
+  /// <param name="groupId">The ID of the group to retrieve.</param>
   /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
   /// <returns>Group</returns>
   /// <exception cref="MonoCloudException">A server side error occurred.</exception>
@@ -158,7 +158,7 @@ public class GroupsClient : MonoCloudClientBase
   /// <summary>
   /// Delete a group
   /// </summary>
-  /// <param name="groupId">Group Id</param>
+  /// <param name="groupId">The ID of the group to be deleted.</param>
   /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
   /// <returns></returns>
   /// <exception cref="MonoCloudException">A server side error occurred.</exception>
@@ -188,8 +188,8 @@ public class GroupsClient : MonoCloudClientBase
   /// <summary>
   /// Update a group
   /// </summary>
-  /// <param name="groupId">Group Id</param>
-  /// <param name="patchGroupRequest">Data to be updated</param>
+  /// <param name="groupId">The ID of the group to be updated.</param>
+  /// <param name="patchGroupRequest">The update group request.</param>
   /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
   /// <returns>Group</returns>
   /// <exception cref="MonoCloudException">A server side error occurred.</exception>

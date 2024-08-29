@@ -4,12 +4,12 @@ using System.Collections.Generic;
 namespace MonoCloud.SDK.Identity.Models;
 
 /// <summary>
-/// The Unblock Ip Request class.
+/// The Unblock IP Request class.
 /// </summary>
 public class UnblockIpRequest
 {
    /// <summary>
-   /// The ip address to be unblocked. Use &#39;all&#39; for unblocking all the ip addresses.
+   /// The IP address to be unblocked. Use &#39;all&#39; to unblock all IP addresses associated with the user.
    /// </summary>
    public string IpAddress { get; set; }
 }

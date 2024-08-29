@@ -12,17 +12,17 @@ namespace MonoCloud.SDK.Identity.Models;
 public class PatchGroupRequest
 {
    /// <summary>
-   /// Gets or sets the name for this group.
+   /// The name of the group.
    /// </summary>
    public Optional<string> Name { get; set; }
 
    /// <summary>
-   /// Gets or sets the description for this group.
+   /// The description of the group.
    /// </summary>
    public Optional<string?> Description { get; set; }
 
    /// <summary>
-   /// Specifies if the group should be assigned to new users by default
+   /// Specifies whether the group should be assigned to new users by default.
    /// </summary>
    public Optional<bool> IsAutoAssigned { get; set; }
 }

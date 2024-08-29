@@ -9,12 +9,12 @@ namespace MonoCloud.SDK.Identity.Models;
 public class ExternalAuthenticatorDisconnectRequest
 {
    /// <summary>
-   /// External Authenticator to be disconnected
+   /// The external authenticator to be disconnected.
    /// </summary>
    public ExternalAuthenticators? Authenticator { get; set; }
 
    /// <summary>
-   /// Provider User Id of the external authenticator.
+   /// The ID of the user in the external provider&#39;s system.
    /// </summary>
    public string ProviderUserId { get; set; }
 }
