@@ -44,7 +44,7 @@ public class UsersClient : MonoCloudClientBase
   /// <param name="page">The page number to retrieve.</param>
   /// <param name="size">The number of items per page.</param>
   /// <param name="filter">A query filter to apply when searching for users.</param>
-  /// <param name="sort">Specifies the sort criteria in the &#39;sort_key:sort_order&#39; format. The sort order value can be &#39;1&#39; for ascending and &#39;-1&#39; for descending.  Acceptable sort key values are &#39;given_name&#39;, &#39;middle_name&#39;, &#39;family_name&#39;, &#39;name&#39;, &#39;creation_time&#39;, and &#39;last_updated&#39;.</param>
+  /// <param name="sort">Specifies the sort criteria in the &#39;sort_key:sort_order&#39; format. The sort order value can be &#39;1&#39; for ascending and &#39;-1&#39; for descending.  Acceptable sort key values are &#39;creation_time&#39;, and &#39;last_updated&#39;.</param>
   /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
   /// <returns>List&lt;UserSummary&gt;</returns>
   /// <exception cref="MonoCloudException">A server side error occurred.</exception>
@@ -1063,7 +1063,7 @@ public class UsersClient : MonoCloudClientBase
   /// <param name="page">The page number to retrieve.</param>
   /// <param name="size">The number of items per page.</param>
   /// <param name="filter">A query filter to apply when searching for users.</param>
-  /// <param name="sort">Specifies the sort criteria in the &#39;sort_key:sort_order&#39; format. The sort order value can be &#39;1&#39; for ascending and &#39;-1&#39; for descending.  Acceptable sort key values are &#39;given_name&#39;, &#39;middle_name&#39;, &#39;family_name&#39;, &#39;name&#39;, &#39;creation_time&#39;, and &#39;last_updated&#39;.</param>
+  /// <param name="sort">Specifies the sort criteria in the &#39;sort_key:sort_order&#39; format. The sort order value can be &#39;1&#39; for ascending and &#39;-1&#39; for descending.  Acceptable sort key values are &#39;creation_time&#39;, and &#39;last_updated&#39;.</param>
   /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
   /// <returns>List&lt;UserSummary&gt;</returns>
   /// <exception cref="MonoCloudException">A server side error occurred.</exception>
