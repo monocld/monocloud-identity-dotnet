@@ -67,6 +67,21 @@ public class CreateUserRequest
    /// The URI pointing to the user&#39;s profile picture.
    /// </summary>
    public string? Picture { get; set; }
+
+   /// <summary>
+   /// Specifies whether the password policy check should be skipped.
+   /// </summary>
+   public bool? SkipPasswordPolicyChecks { get; set; }
+
+   /// <summary>
+   /// Specifies whether the identifier restriction checks should be skipped.
+   /// </summary>
+   public bool? SkipIdentifierRestrictionChecks { get; set; }
+
+   /// <summary>
+   /// Specifies whether the users profile should conform to the options requirements.
+   /// </summary>
+   public bool? SkipConformanceChecks { get; set; }
 }
 
 

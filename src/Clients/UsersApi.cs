@@ -463,6 +463,47 @@ public class UsersClient : MonoCloudClientBase
   }
 
   /// <summary>
+  /// Update user claims
+  /// </summary>
+  /// <param name="userId">The ID of the user whose claims should be updated.</param>
+  /// <param name="updateClaimsRequest">The update claims request.</param>
+  /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
+  /// <returns>User</returns>
+  /// <exception cref="MonoCloudException">A server side error occurred.</exception>
+  public Task<MonoCloudResponse<User>> PatchClaimsAsync(string userId, UpdateClaimsRequest updateClaimsRequest, CancellationToken cancellationToken = default)
+  { 
+    if (userId == null)
+    {
+      throw new ArgumentNullException(nameof(userId));
+    }
+    
+    if (updateClaimsRequest == null)
+    {
+      throw new ArgumentNullException(nameof(updateClaimsRequest));
+    }
+    
+    var encodedUserId = HttpUtility.UrlEncode(userId);
+
+    var urlBuilder = new StringBuilder();
+    urlBuilder.Append($"users/{encodedUserId}/claims?");
+
+    urlBuilder.Length--;
+
+    var request = new HttpRequestMessage
+    {
+      Method = new HttpMethod("PATCH"),
+      RequestUri = new Uri(urlBuilder.ToString(), UriKind.RelativeOrAbsolute),
+      Content = new StringContent(Serialize(updateClaimsRequest), Encoding.UTF8, "application/json"),
+      Headers =
+      {
+        { "Accept", "application/json" }
+      }
+    };
+
+    return ProcessRequestAsync<User>(request, cancellationToken);
+  }
+
+  /// <summary>
   /// Get user private data
   /// </summary>
   /// <param name="userId">The ID of the user whose private data should be retrieved.</param>
