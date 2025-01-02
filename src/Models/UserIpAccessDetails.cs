@@ -9,7 +9,7 @@ namespace MonoCloud.SDK.Identity.Models;
 public class UserIpAccessDetails
 {
    /// <summary>
-   /// Number of unsuccessful logins.
+   /// Number of unsuccessful sign-ins.
    /// </summary>
    public int FailureCount { get; set; }
 
@@ -21,7 +21,7 @@ public class UserIpAccessDetails
    /// <summary>
    /// Total number of sign-in attempts.
    /// </summary>
-   public int LoginCount { get; set; }
+   public int SignInAttemptsCount { get; set; }
 
    /// <summary>
    /// Specifies the ip address from which the sign in attempt was made.
@@ -31,7 +31,7 @@ public class UserIpAccessDetails
    /// <summary>
    /// Specifies the time (in Epoch) at which the last sign in attempt was made.
    /// </summary>
-   public DateTime LastLoginAttempt { get; set; }
+   public DateTime LastSignInAttempt { get; set; }
 }
 
 

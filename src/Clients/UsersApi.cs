@@ -126,9 +126,9 @@ public class UsersClient : MonoCloudClientBase
   /// </summary>
   /// <param name="userId">The ID of the user whose profile information should be retrieved.</param>
   /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
-  /// <returns>UserWithAccessDetails</returns>
+  /// <returns>User</returns>
   /// <exception cref="MonoCloudException">A server side error occurred.</exception>
-  public Task<MonoCloudResponse<UserWithAccessDetails>> FindUserByIdAsync(string userId, CancellationToken cancellationToken = default)
+  public Task<MonoCloudResponse<User>> FindUserByIdAsync(string userId, CancellationToken cancellationToken = default)
   { 
     if (userId == null)
     {
@@ -152,7 +152,7 @@ public class UsersClient : MonoCloudClientBase
       }
     };
 
-    return ProcessRequestAsync<UserWithAccessDetails>(request, cancellationToken);
+    return ProcessRequestAsync<User>(request, cancellationToken);
   }
 
   /// <summary>
@@ -660,7 +660,7 @@ public class UsersClient : MonoCloudClientBase
   /// <param name="page">The page number to retrieve.</param>
   /// <param name="size">The number of items per page.</param>
   /// <param name="filter">A query filter to apply when searching for blocked IPs.</param>
-  /// <param name="sort">The sort criteria in &#39;sort_key:sort_order&#39; format. Sort order can be &#39;1&#39; for ascending and &#39;-1&#39; for descending.  Acceptable sort key values are &#39;block_until&#39; and &#39;last_login_attempt&#39;.</param>
+  /// <param name="sort">The sort criteria in &#39;sort_key:sort_order&#39; format. Sort order can be &#39;1&#39; for ascending and &#39;-1&#39; for descending.  Acceptable sort key values are &#39;block_until&#39; and &#39;last_sign_in_attempt&#39;.</param>
   /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
   /// <returns>List&lt;UserIpAccessDetails&gt;</returns>
   /// <exception cref="MonoCloudException">A server side error occurred.</exception>

@@ -67,6 +67,46 @@ public class UserSummary
    /// Specifies the time (in Epoch) of last password update.
    /// </summary>
    public DateTime? PasswordUpdatedAt { get; set; }
+
+   /// <summary>
+   /// Specifies whether the user has been locked out.
+   /// </summary>
+   public bool Blocked { get; set; }
+
+   /// <summary>
+   /// Total number of sign-in attempts.
+   /// </summary>
+   public int SignInAttemptsCount { get; set; }
+
+   /// <summary>
+   /// Specifies the time (in Epoch) at which the last sign in attempt was made.
+   /// </summary>
+   public DateTime? LastSignInAttempt { get; set; }
+
+   /// <summary>
+   /// Specifies the ip address from which the last sign in attempt was made.
+   /// </summary>
+   public string? LastSignInAttemptIp { get; set; }
+
+   /// <summary>
+   /// Specifies the time (in Epoch) at which the last activity of the user was recorded.
+   /// </summary>
+   public DateTime? LastActivity { get; set; }
+
+   /// <summary>
+   /// The last known city of the user.
+   /// </summary>
+   public string? LastKnownCity { get; set; }
+
+   /// <summary>
+   /// The last known country of the user.
+   /// </summary>
+   public string? LastKnownCountry { get; set; }
+
+   /// <summary>
+   /// The last known region of the user.
+   /// </summary>
+   public string? LastKnownRegion { get; set; }
 }
 
 
