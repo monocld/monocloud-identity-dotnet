@@ -9,11 +9,6 @@ namespace MonoCloud.SDK.Identity.Models;
 public class UserSession
 {
    /// <summary>
-   /// The session key
-   /// </summary>
-   public string SessionKey { get; set; }
-
-   /// <summary>
    /// The unique ID of the session
    /// </summary>
    public string SessionId { get; set; }
