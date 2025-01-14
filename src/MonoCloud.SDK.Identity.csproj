@@ -2,12 +2,12 @@
 
   <PropertyGroup>
     <RootNamespace>MonoCloud.SDK.Identity</RootNamespace>
-    <TargetFrameworks Condition="'$(LibraryFrameworks)'==''">net8.0;net7.0;net6.0;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks Condition="'$(LibraryFrameworks)'==''">net9.0;net8.0;net7.0;net6.0;netstandard2.0</TargetFrameworks>
     <LangVersion>10.0</LangVersion>
     <Nullable>enable</Nullable>
     <SignAssembly>true</SignAssembly>
     <PackageId>MonoCloud.SDK.Identity</PackageId>
-    <Version>0.2.7</Version>
+    <Version>0.2.8</Version>
     <Company>MonoCloud</Company>
     <Product>MonoCloud.SDK.Identity</Product>
     <AssemblyName>MonoCloud.SDK.Identity</AssemblyName>
@@ -32,7 +32,7 @@
   <ItemGroup>
     <PackageReference Include="Macross.Json.Extensions" Version="3.0.0" />
     <PackageReference Include="Microsoft.Bcl.HashCode" Version="1.1.1" />
-    <PackageReference Include="MonoCloud.SDK.Core" Version="0.1.8" />
+    <PackageReference Include="MonoCloud.SDK.Core" Version="0.1.9" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
@@ -61,22 +61,3 @@
   </ItemGroup>
 
 </Project>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
