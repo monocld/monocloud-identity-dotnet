@@ -1027,9 +1027,9 @@ public class UsersClient : MonoCloudClientBase
   /// <param name="userId">The ID of the user to be assigned to the group.</param>
   /// <param name="groupId">The ID of the group to which the user will be assigned.</param>
   /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
-  /// <returns></returns>
+  /// <returns>UserGroup</returns>
   /// <exception cref="MonoCloudException">A server side error occurred.</exception>
-  public Task<MonoCloudResponse> AssignUserToGroupAsync(string userId, Guid groupId, CancellationToken cancellationToken = default)
+  public Task<MonoCloudResponse<UserGroup>> AssignUserToGroupAsync(string userId, Guid groupId, CancellationToken cancellationToken = default)
   { 
     if (userId == null)
     {
@@ -1054,9 +1054,13 @@ public class UsersClient : MonoCloudClientBase
     {
       Method = new HttpMethod("POST"),
       RequestUri = new Uri(urlBuilder.ToString(), UriKind.RelativeOrAbsolute),
+      Headers =
+      {
+        { "Accept", "application/json" }
+      }
     };
 
-    return ProcessRequestAsync(request, cancellationToken);
+    return ProcessRequestAsync<UserGroup>(request, cancellationToken);
   }
 
   /// <summary>
