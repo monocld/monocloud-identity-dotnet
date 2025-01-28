@@ -19,19 +19,19 @@ public class UserPhone
    public bool Primary { get; set; }
 
    /// <summary>
-   /// A list of identity providers the phone is connected to.
-   /// </summary>
-   public List<IdPs> Idps { get; set; }
-
-   /// <summary>
-   /// A list of authenticators the phone is connected to.
-   /// </summary>
-   public List<Authenticators> Authenticators { get; set; }
-
-   /// <summary>
    /// Specifies whether the phone is verified or not.
    /// </summary>
    public bool Verified { get; set; }
+
+   /// <summary>
+   /// Specifies where the phone was originally collected from.
+   /// </summary>
+   public string? Source { get; set; }
+
+   /// <summary>
+   /// Specifies where the phone verification was done.
+   /// </summary>
+   public string? VerificationSource { get; set; }
 
    /// <summary>
    /// The phone number.

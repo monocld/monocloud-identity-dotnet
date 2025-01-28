@@ -19,6 +19,11 @@ public class UserSummary
    public bool Disabled { get; set; }
 
    /// <summary>
+   /// List of providers that the user account is connected to
+   /// </summary>
+   public List<UserConnection> Connections { get; set; }
+
+   /// <summary>
    /// User&#39;s Claims
    /// </summary>
    public Dictionary<string, object> Claims { get; set; }
@@ -39,9 +44,14 @@ public class UserSummary
    public List<UserPasskey> Passkeys { get; set; }
 
    /// <summary>
-   /// List of registered idps of user
+   /// A flag indicating that the user must change their password on next sign-in
    /// </summary>
-   public List<UserIdPSummary> Idps { get; set; }
+   public bool ForcePasswordReset { get; set; }
+
+   /// <summary>
+   /// List of registered external providers of user
+   /// </summary>
+   public List<UserExternalProviderSummary> ExternalProviders { get; set; }
 
    /// <summary>
    /// Specifies the creation time of the user (in Epoch)

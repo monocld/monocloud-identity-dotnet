@@ -39,6 +39,16 @@ public class CreateUserRequest
    public string? Password { get; set; }
 
    /// <summary>
+   /// The password hash for the user, which will be used for authentication.
+   /// </summary>
+   public string? PasswordHash { get; set; }
+
+   /// <summary>
+   /// The algorithm used the hash the password for the user.
+   /// </summary>
+   public PasswordAlgorithms? PasswordHashAlgorithm { get; set; }
+
+   /// <summary>
    /// The user&#39;s full name.
    /// </summary>
    public string? Name { get; set; }

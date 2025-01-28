@@ -4,9 +4,9 @@ using System.Collections.Generic;
 namespace MonoCloud.SDK.Identity.Models;
 
 /// <summary>
-/// The User IDP response class
+/// The User External Provider Summary response class
 /// </summary>
-public class UserIdP
+public class UserExternalProviderSummary
 {
    /// <summary>
    /// Specifies the External Authenticator.
@@ -17,11 +17,6 @@ public class UserIdP
    /// Specifies the idp user Id.
    /// </summary>
    public string ProviderUserId { get; set; }
-
-   /// <summary>
-   /// Claims related to the idp.
-   /// </summary>
-   public Dictionary<string, object> Claims { get; set; }
 }
 
 

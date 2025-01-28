@@ -19,19 +19,19 @@ public class UserEmail
    public bool Primary { get; set; }
 
    /// <summary>
-   /// A list of identity providers the email is connected to.
-   /// </summary>
-   public List<IdPs> Idps { get; set; }
-
-   /// <summary>
-   /// A list of authenticators the email is connected to.
-   /// </summary>
-   public List<Authenticators> Authenticators { get; set; }
-
-   /// <summary>
    /// Specifies whether the email is verified or not.
    /// </summary>
    public bool Verified { get; set; }
+
+   /// <summary>
+   /// Specifies where the email was originally collected from.
+   /// </summary>
+   public string? Source { get; set; }
+
+   /// <summary>
+   /// Specifies where the email verification was done.
+   /// </summary>
+   public string? VerificationSource { get; set; }
 
    /// <summary>
    /// The email id.

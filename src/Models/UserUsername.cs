@@ -14,19 +14,14 @@ public class UserUsername
    public Guid Id { get; set; }
 
    /// <summary>
-   /// A list of identity providers the username is connected to.
-   /// </summary>
-   public List<IdPs> Idps { get; set; }
-
-   /// <summary>
-   /// A list of authenticators the username is connected to.
-   /// </summary>
-   public List<Authenticators> Authenticators { get; set; }
-
-   /// <summary>
    /// The username.
    /// </summary>
    public string Username { get; set; }
+
+   /// <summary>
+   /// Specifies where the username was originally collected from.
+   /// </summary>
+   public string? Source { get; set; }
 }
 
 
