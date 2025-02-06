@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace MonoCloud.SDK.Identity.Models;
 
 /// <summary>
-/// The User External Provider Summary response class
+/// The User External Provider summary response class
 /// </summary>
 public class UserExternalProviderSummary
 {

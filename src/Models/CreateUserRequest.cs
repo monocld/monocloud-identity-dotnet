@@ -49,6 +49,11 @@ public class CreateUserRequest
    public PasswordAlgorithms? PasswordHashAlgorithm { get; set; }
 
    /// <summary>
+   /// Specifies whether the specified password is temporary and will require the user to reset their password on the next sign-in.
+   /// </summary>
+   public bool? IsTemporaryPassword { get; set; }
+
+   /// <summary>
    /// The user&#39;s full name.
    /// </summary>
    public string? Name { get; set; }

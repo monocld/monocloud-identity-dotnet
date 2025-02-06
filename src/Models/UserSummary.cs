@@ -99,6 +99,21 @@ public class UserSummary
    public string? LastSignInAttemptIp { get; set; }
 
    /// <summary>
+   /// Total number of successful sign-ins.
+   /// </summary>
+   public int SignInSuccessCount { get; set; }
+
+   /// <summary>
+   /// Specifies the time (in Epoch) of the last successful sign-in.
+   /// </summary>
+   public DateTime? LastSignInSuccess { get; set; }
+
+   /// <summary>
+   /// Specifies the ip address of the last successful sign-in.
+   /// </summary>
+   public string? LastSignInSuccessIp { get; set; }
+
+   /// <summary>
    /// Specifies the time (in Epoch) at which the last activity of the user was recorded.
    /// </summary>
    public DateTime? LastActivity { get; set; }

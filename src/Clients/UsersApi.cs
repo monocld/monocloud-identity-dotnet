@@ -295,6 +295,164 @@ public class UsersClient : MonoCloudClientBase
   }
 
   /// <summary>
+  /// Add or update username
+  /// </summary>
+  /// <param name="userId">The ID of the user whose username should be set.</param>
+  /// <param name="updateUsernameRequest">The request body.</param>
+  /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
+  /// <returns>User</returns>
+  /// <exception cref="MonoCloudException">A server side error occurred.</exception>
+  public Task<MonoCloudResponse<User>> UpdateUsernameAsync(string userId, UpdateUsernameRequest updateUsernameRequest, CancellationToken cancellationToken = default)
+  { 
+    if (userId == null)
+    {
+      throw new ArgumentNullException(nameof(userId));
+    }
+    
+    if (updateUsernameRequest == null)
+    {
+      throw new ArgumentNullException(nameof(updateUsernameRequest));
+    }
+    
+    var encodedUserId = HttpUtility.UrlEncode(userId);
+
+    var urlBuilder = new StringBuilder();
+    urlBuilder.Append($"users/{encodedUserId}/username?");
+
+    urlBuilder.Length--;
+
+    var request = new HttpRequestMessage
+    {
+      Method = new HttpMethod("PUT"),
+      RequestUri = new Uri(urlBuilder.ToString(), UriKind.RelativeOrAbsolute),
+      Content = new StringContent(Serialize(updateUsernameRequest), Encoding.UTF8, "application/json"),
+      Headers =
+      {
+        { "Accept", "application/json" }
+      }
+    };
+
+    return ProcessRequestAsync<User>(request, cancellationToken);
+  }
+
+  /// <summary>
+  /// Remove username
+  /// </summary>
+  /// <param name="userId">The ID of the user whose username should be removed.</param>
+  /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
+  /// <returns>User</returns>
+  /// <exception cref="MonoCloudException">A server side error occurred.</exception>
+  public Task<MonoCloudResponse<User>> RemoveUsernameAsync(string userId, CancellationToken cancellationToken = default)
+  { 
+    if (userId == null)
+    {
+      throw new ArgumentNullException(nameof(userId));
+    }
+    
+    var encodedUserId = HttpUtility.UrlEncode(userId);
+
+    var urlBuilder = new StringBuilder();
+    urlBuilder.Append($"users/{encodedUserId}/username?");
+
+    urlBuilder.Length--;
+
+    var request = new HttpRequestMessage
+    {
+      Method = new HttpMethod("DELETE"),
+      RequestUri = new Uri(urlBuilder.ToString(), UriKind.RelativeOrAbsolute),
+      Headers =
+      {
+        { "Accept", "application/json" }
+      }
+    };
+
+    return ProcessRequestAsync<User>(request, cancellationToken);
+  }
+
+  /// <summary>
+  /// Add an email
+  /// </summary>
+  /// <param name="userId">The ID of the user for whom the email should be added.</param>
+  /// <param name="addEmailRequest">The request body</param>
+  /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
+  /// <returns>User</returns>
+  /// <exception cref="MonoCloudException">A server side error occurred.</exception>
+  public Task<MonoCloudResponse<User>> AddEmailAsync(string userId, AddEmailRequest addEmailRequest, CancellationToken cancellationToken = default)
+  { 
+    if (userId == null)
+    {
+      throw new ArgumentNullException(nameof(userId));
+    }
+    
+    if (addEmailRequest == null)
+    {
+      throw new ArgumentNullException(nameof(addEmailRequest));
+    }
+    
+    var encodedUserId = HttpUtility.UrlEncode(userId);
+
+    var urlBuilder = new StringBuilder();
+    urlBuilder.Append($"users/{encodedUserId}/emails?");
+
+    urlBuilder.Length--;
+
+    var request = new HttpRequestMessage
+    {
+      Method = new HttpMethod("POST"),
+      RequestUri = new Uri(urlBuilder.ToString(), UriKind.RelativeOrAbsolute),
+      Content = new StringContent(Serialize(addEmailRequest), Encoding.UTF8, "application/json"),
+      Headers =
+      {
+        { "Accept", "application/json" }
+      }
+    };
+
+    return ProcessRequestAsync<User>(request, cancellationToken);
+  }
+
+  /// <summary>
+  /// Remove an email
+  /// </summary>
+  /// <param name="userId">The ID of the user whose email should be removed.</param>
+  /// <param name="identifierId">The ID of the email to be removed.</param>
+  /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
+  /// <returns>User</returns>
+  /// <exception cref="MonoCloudException">A server side error occurred.</exception>
+  public Task<MonoCloudResponse<User>> RemoveEmailAsync(string userId, Guid identifierId, CancellationToken cancellationToken = default)
+  { 
+    if (userId == null)
+    {
+      throw new ArgumentNullException(nameof(userId));
+    }
+    
+    if (identifierId == null)
+    {
+      throw new ArgumentNullException(nameof(identifierId));
+    }
+    
+    var encodedUserId = HttpUtility.UrlEncode(userId);
+
+    var encodedIdentifierId = HttpUtility.UrlEncode(identifierId.ToString());
+
+    var urlBuilder = new StringBuilder();
+    urlBuilder.Append($"users/{encodedUserId}/emails/{encodedIdentifierId}?");
+
+    urlBuilder.Length--;
+
+    var request = new HttpRequestMessage
+    {
+      Method = new HttpMethod("DELETE"),
+      RequestUri = new Uri(urlBuilder.ToString(), UriKind.RelativeOrAbsolute),
+      Headers =
+      {
+        { "Accept", "application/json" }
+      }
+    };
+
+    return ProcessRequestAsync<User>(request, cancellationToken);
+  }
+
+  /// <summary>
   /// Set email as primary
   /// </summary>
   /// <param name="userId">The ID of the user whose email should be set as primary.</param>
@@ -368,6 +526,180 @@ public class UsersClient : MonoCloudClientBase
     var request = new HttpRequestMessage
     {
       Method = new HttpMethod("POST"),
+      RequestUri = new Uri(urlBuilder.ToString(), UriKind.RelativeOrAbsolute),
+      Headers =
+      {
+        { "Accept", "application/json" }
+      }
+    };
+
+    return ProcessRequestAsync<User>(request, cancellationToken);
+  }
+
+  /// <summary>
+  /// Mark email as unverified
+  /// </summary>
+  /// <param name="userId">The ID of the user whose email is to be marked as unverified.</param>
+  /// <param name="identifierId">The ID of the email to be marked as unverified.</param>
+  /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
+  /// <returns>User</returns>
+  /// <exception cref="MonoCloudException">A server side error occurred.</exception>
+  public Task<MonoCloudResponse<User>> SetEmailUnverifiedAsync(string userId, Guid identifierId, CancellationToken cancellationToken = default)
+  { 
+    if (userId == null)
+    {
+      throw new ArgumentNullException(nameof(userId));
+    }
+    
+    if (identifierId == null)
+    {
+      throw new ArgumentNullException(nameof(identifierId));
+    }
+    
+    var encodedUserId = HttpUtility.UrlEncode(userId);
+
+    var encodedIdentifierId = HttpUtility.UrlEncode(identifierId.ToString());
+
+    var urlBuilder = new StringBuilder();
+    urlBuilder.Append($"users/{encodedUserId}/emails/{encodedIdentifierId}/unverify?");
+
+    urlBuilder.Length--;
+
+    var request = new HttpRequestMessage
+    {
+      Method = new HttpMethod("POST"),
+      RequestUri = new Uri(urlBuilder.ToString(), UriKind.RelativeOrAbsolute),
+      Headers =
+      {
+        { "Accept", "application/json" }
+      }
+    };
+
+    return ProcessRequestAsync<User>(request, cancellationToken);
+  }
+
+  /// <summary>
+  /// Verify Email
+  /// </summary>
+  /// <param name="userId">The ID of the user whose email verification link is requested.</param>
+  /// <param name="identifierId">The ID of the email to be verified.</param>
+  /// <param name="verifyEmailRequest"></param>
+  /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
+  /// <returns>VerifyEmailResponse</returns>
+  /// <exception cref="MonoCloudException">A server side error occurred.</exception>
+  public Task<MonoCloudResponse<VerifyEmailResponse>> VerifyEmailAsync(string userId, Guid identifierId, VerifyEmailRequest verifyEmailRequest, CancellationToken cancellationToken = default)
+  { 
+    if (userId == null)
+    {
+      throw new ArgumentNullException(nameof(userId));
+    }
+    
+    if (identifierId == null)
+    {
+      throw new ArgumentNullException(nameof(identifierId));
+    }
+    
+    if (verifyEmailRequest == null)
+    {
+      throw new ArgumentNullException(nameof(verifyEmailRequest));
+    }
+    
+    var encodedUserId = HttpUtility.UrlEncode(userId);
+
+    var encodedIdentifierId = HttpUtility.UrlEncode(identifierId.ToString());
+
+    var urlBuilder = new StringBuilder();
+    urlBuilder.Append($"users/{encodedUserId}/emails/{encodedIdentifierId}/verify/link?");
+
+    urlBuilder.Length--;
+
+    var request = new HttpRequestMessage
+    {
+      Method = new HttpMethod("POST"),
+      RequestUri = new Uri(urlBuilder.ToString(), UriKind.RelativeOrAbsolute),
+      Content = new StringContent(Serialize(verifyEmailRequest), Encoding.UTF8, "application/json"),
+      Headers =
+      {
+        { "Accept", "application/json" }
+      }
+    };
+
+    return ProcessRequestAsync<VerifyEmailResponse>(request, cancellationToken);
+  }
+
+  /// <summary>
+  /// Add a phone number
+  /// </summary>
+  /// <param name="userId">The ID of the user for whom the phone number should be added.</param>
+  /// <param name="addPhoneRequest">The request body</param>
+  /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
+  /// <returns>User</returns>
+  /// <exception cref="MonoCloudException">A server side error occurred.</exception>
+  public Task<MonoCloudResponse<User>> AddPhoneAsync(string userId, AddPhoneRequest addPhoneRequest, CancellationToken cancellationToken = default)
+  { 
+    if (userId == null)
+    {
+      throw new ArgumentNullException(nameof(userId));
+    }
+    
+    if (addPhoneRequest == null)
+    {
+      throw new ArgumentNullException(nameof(addPhoneRequest));
+    }
+    
+    var encodedUserId = HttpUtility.UrlEncode(userId);
+
+    var urlBuilder = new StringBuilder();
+    urlBuilder.Append($"users/{encodedUserId}/phones?");
+
+    urlBuilder.Length--;
+
+    var request = new HttpRequestMessage
+    {
+      Method = new HttpMethod("POST"),
+      RequestUri = new Uri(urlBuilder.ToString(), UriKind.RelativeOrAbsolute),
+      Content = new StringContent(Serialize(addPhoneRequest), Encoding.UTF8, "application/json"),
+      Headers =
+      {
+        { "Accept", "application/json" }
+      }
+    };
+
+    return ProcessRequestAsync<User>(request, cancellationToken);
+  }
+
+  /// <summary>
+  /// Remove a phone number
+  /// </summary>
+  /// <param name="userId">The ID of the user whose phone number should be removed.</param>
+  /// <param name="identifierId">The ID of the phone number to be removed.</param>
+  /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
+  /// <returns>User</returns>
+  /// <exception cref="MonoCloudException">A server side error occurred.</exception>
+  public Task<MonoCloudResponse<User>> RemovePhoneAsync(string userId, Guid identifierId, CancellationToken cancellationToken = default)
+  { 
+    if (userId == null)
+    {
+      throw new ArgumentNullException(nameof(userId));
+    }
+    
+    if (identifierId == null)
+    {
+      throw new ArgumentNullException(nameof(identifierId));
+    }
+    
+    var encodedUserId = HttpUtility.UrlEncode(userId);
+
+    var encodedIdentifierId = HttpUtility.UrlEncode(identifierId.ToString());
+
+    var urlBuilder = new StringBuilder();
+    urlBuilder.Append($"users/{encodedUserId}/phones/{encodedIdentifierId}?");
+
+    urlBuilder.Length--;
+
+    var request = new HttpRequestMessage
+    {
+      Method = new HttpMethod("DELETE"),
       RequestUri = new Uri(urlBuilder.ToString(), UriKind.RelativeOrAbsolute),
       Headers =
       {
@@ -460,6 +792,266 @@ public class UsersClient : MonoCloudClientBase
     };
 
     return ProcessRequestAsync<User>(request, cancellationToken);
+  }
+
+  /// <summary>
+  /// Mark phone as unverified
+  /// </summary>
+  /// <param name="userId">The ID of the user whose phone is to be marked as unverified.</param>
+  /// <param name="identifierId">The ID of the phone to be marked as unverified.</param>
+  /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
+  /// <returns>User</returns>
+  /// <exception cref="MonoCloudException">A server side error occurred.</exception>
+  public Task<MonoCloudResponse<User>> SetPhoneUnverifiedAsync(string userId, Guid identifierId, CancellationToken cancellationToken = default)
+  { 
+    if (userId == null)
+    {
+      throw new ArgumentNullException(nameof(userId));
+    }
+    
+    if (identifierId == null)
+    {
+      throw new ArgumentNullException(nameof(identifierId));
+    }
+    
+    var encodedUserId = HttpUtility.UrlEncode(userId);
+
+    var encodedIdentifierId = HttpUtility.UrlEncode(identifierId.ToString());
+
+    var urlBuilder = new StringBuilder();
+    urlBuilder.Append($"users/{encodedUserId}/phones/{encodedIdentifierId}/unverify?");
+
+    urlBuilder.Length--;
+
+    var request = new HttpRequestMessage
+    {
+      Method = new HttpMethod("POST"),
+      RequestUri = new Uri(urlBuilder.ToString(), UriKind.RelativeOrAbsolute),
+      Headers =
+      {
+        { "Accept", "application/json" }
+      }
+    };
+
+    return ProcessRequestAsync<User>(request, cancellationToken);
+  }
+
+  /// <summary>
+  /// Remove passkey
+  /// </summary>
+  /// <param name="userId">The ID of the user from whose account the passkey should be removed.</param>
+  /// <param name="passkeyId">The ID of the passkey to remove.</param>
+  /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
+  /// <returns></returns>
+  /// <exception cref="MonoCloudException">A server side error occurred.</exception>
+  public Task<MonoCloudResponse> RemovePasskeyAsync(string userId, string passkeyId, CancellationToken cancellationToken = default)
+  { 
+    if (userId == null)
+    {
+      throw new ArgumentNullException(nameof(userId));
+    }
+    
+    if (passkeyId == null)
+    {
+      throw new ArgumentNullException(nameof(passkeyId));
+    }
+    
+    var encodedUserId = HttpUtility.UrlEncode(userId);
+
+    var encodedPasskeyId = HttpUtility.UrlEncode(passkeyId);
+
+    var urlBuilder = new StringBuilder();
+    urlBuilder.Append($"users/{encodedUserId}/passkeys/{encodedPasskeyId}?");
+
+    urlBuilder.Length--;
+
+    var request = new HttpRequestMessage
+    {
+      Method = new HttpMethod("DELETE"),
+      RequestUri = new Uri(urlBuilder.ToString(), UriKind.RelativeOrAbsolute),
+    };
+
+    return ProcessRequestAsync(request, cancellationToken);
+  }
+
+  /// <summary>
+  /// Set password
+  /// </summary>
+  /// <param name="userId">The ID of the user whose password should be set.</param>
+  /// <param name="setPasswordRequest">The set password request.</param>
+  /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
+  /// <returns>User</returns>
+  /// <exception cref="MonoCloudException">A server side error occurred.</exception>
+  public Task<MonoCloudResponse<User>> SetPasswordAsync(string userId, SetPasswordRequest setPasswordRequest, CancellationToken cancellationToken = default)
+  { 
+    if (userId == null)
+    {
+      throw new ArgumentNullException(nameof(userId));
+    }
+    
+    if (setPasswordRequest == null)
+    {
+      throw new ArgumentNullException(nameof(setPasswordRequest));
+    }
+    
+    var encodedUserId = HttpUtility.UrlEncode(userId);
+
+    var urlBuilder = new StringBuilder();
+    urlBuilder.Append($"users/{encodedUserId}/password?");
+
+    urlBuilder.Length--;
+
+    var request = new HttpRequestMessage
+    {
+      Method = new HttpMethod("PUT"),
+      RequestUri = new Uri(urlBuilder.ToString(), UriKind.RelativeOrAbsolute),
+      Content = new StringContent(Serialize(setPasswordRequest), Encoding.UTF8, "application/json"),
+      Headers =
+      {
+        { "Accept", "application/json" }
+      }
+    };
+
+    return ProcessRequestAsync<User>(request, cancellationToken);
+  }
+
+  /// <summary>
+  /// Remove password
+  /// </summary>
+  /// <param name="userId">The ID of the user whose password should be removed.</param>
+  /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
+  /// <returns></returns>
+  /// <exception cref="MonoCloudException">A server side error occurred.</exception>
+  public Task<MonoCloudResponse> RemovePasswordAsync(string userId, CancellationToken cancellationToken = default)
+  { 
+    if (userId == null)
+    {
+      throw new ArgumentNullException(nameof(userId));
+    }
+    
+    var encodedUserId = HttpUtility.UrlEncode(userId);
+
+    var urlBuilder = new StringBuilder();
+    urlBuilder.Append($"users/{encodedUserId}/password?");
+
+    urlBuilder.Length--;
+
+    var request = new HttpRequestMessage
+    {
+      Method = new HttpMethod("DELETE"),
+      RequestUri = new Uri(urlBuilder.ToString(), UriKind.RelativeOrAbsolute),
+    };
+
+    return ProcessRequestAsync(request, cancellationToken);
+  }
+
+  /// <summary>
+  /// Require user password reset
+  /// </summary>
+  /// <param name="userId">The ID of the user.</param>
+  /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
+  /// <returns>User</returns>
+  /// <exception cref="MonoCloudException">A server side error occurred.</exception>
+  public Task<MonoCloudResponse<User>> SetPasswordResetRequiredAsync(string userId, CancellationToken cancellationToken = default)
+  { 
+    if (userId == null)
+    {
+      throw new ArgumentNullException(nameof(userId));
+    }
+    
+    var encodedUserId = HttpUtility.UrlEncode(userId);
+
+    var urlBuilder = new StringBuilder();
+    urlBuilder.Append($"users/{encodedUserId}/password/force_reset?");
+
+    urlBuilder.Length--;
+
+    var request = new HttpRequestMessage
+    {
+      Method = new HttpMethod("POST"),
+      RequestUri = new Uri(urlBuilder.ToString(), UriKind.RelativeOrAbsolute),
+      Headers =
+      {
+        { "Accept", "application/json" }
+      }
+    };
+
+    return ProcessRequestAsync<User>(request, cancellationToken);
+  }
+
+  /// <summary>
+  /// Remove user password reset requirement
+  /// </summary>
+  /// <param name="userId">The ID of the user.</param>
+  /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
+  /// <returns>User</returns>
+  /// <exception cref="MonoCloudException">A server side error occurred.</exception>
+  public Task<MonoCloudResponse<User>> RemovePasswordResetRequiredAsync(string userId, CancellationToken cancellationToken = default)
+  { 
+    if (userId == null)
+    {
+      throw new ArgumentNullException(nameof(userId));
+    }
+    
+    var encodedUserId = HttpUtility.UrlEncode(userId);
+
+    var urlBuilder = new StringBuilder();
+    urlBuilder.Append($"users/{encodedUserId}/password/force_reset?");
+
+    urlBuilder.Length--;
+
+    var request = new HttpRequestMessage
+    {
+      Method = new HttpMethod("DELETE"),
+      RequestUri = new Uri(urlBuilder.ToString(), UriKind.RelativeOrAbsolute),
+      Headers =
+      {
+        { "Accept", "application/json" }
+      }
+    };
+
+    return ProcessRequestAsync<User>(request, cancellationToken);
+  }
+
+  /// <summary>
+  /// Password Reset
+  /// </summary>
+  /// <param name="userId">The ID of the user whose password reset link is requested.</param>
+  /// <param name="resetPasswordRequest"></param>
+  /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
+  /// <returns>ResetPasswordResponse</returns>
+  /// <exception cref="MonoCloudException">A server side error occurred.</exception>
+  public Task<MonoCloudResponse<ResetPasswordResponse>> ResetPasswordAsync(string userId, ResetPasswordRequest resetPasswordRequest, CancellationToken cancellationToken = default)
+  { 
+    if (userId == null)
+    {
+      throw new ArgumentNullException(nameof(userId));
+    }
+    
+    if (resetPasswordRequest == null)
+    {
+      throw new ArgumentNullException(nameof(resetPasswordRequest));
+    }
+    
+    var encodedUserId = HttpUtility.UrlEncode(userId);
+
+    var urlBuilder = new StringBuilder();
+    urlBuilder.Append($"users/{encodedUserId}/password/reset?");
+
+    urlBuilder.Length--;
+
+    var request = new HttpRequestMessage
+    {
+      Method = new HttpMethod("POST"),
+      RequestUri = new Uri(urlBuilder.ToString(), UriKind.RelativeOrAbsolute),
+      Content = new StringContent(Serialize(resetPasswordRequest), Encoding.UTF8, "application/json"),
+      Headers =
+      {
+        { "Accept", "application/json" }
+      }
+    };
+
+    return ProcessRequestAsync<ResetPasswordResponse>(request, cancellationToken);
   }
 
   /// <summary>
@@ -849,44 +1441,6 @@ public class UsersClient : MonoCloudClientBase
   }
 
   /// <summary>
-  /// Remove passkey
-  /// </summary>
-  /// <param name="userId">The ID of the user from whose account the passkey should be removed.</param>
-  /// <param name="passkeyId">The ID of the passkey to remove.</param>
-  /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
-  /// <returns></returns>
-  /// <exception cref="MonoCloudException">A server side error occurred.</exception>
-  public Task<MonoCloudResponse> RemovePasskeyAsync(string userId, string passkeyId, CancellationToken cancellationToken = default)
-  { 
-    if (userId == null)
-    {
-      throw new ArgumentNullException(nameof(userId));
-    }
-    
-    if (passkeyId == null)
-    {
-      throw new ArgumentNullException(nameof(passkeyId));
-    }
-    
-    var encodedUserId = HttpUtility.UrlEncode(userId);
-
-    var encodedPasskeyId = HttpUtility.UrlEncode(passkeyId);
-
-    var urlBuilder = new StringBuilder();
-    urlBuilder.Append($"users/{encodedUserId}/passkeys/{encodedPasskeyId}?");
-
-    urlBuilder.Length--;
-
-    var request = new HttpRequestMessage
-    {
-      Method = new HttpMethod("DELETE"),
-      RequestUri = new Uri(urlBuilder.ToString(), UriKind.RelativeOrAbsolute),
-    };
-
-    return ProcessRequestAsync(request, cancellationToken);
-  }
-
-  /// <summary>
   /// Disconnect external authenticator
   /// </summary>
   /// <param name="userId">The ID of the user from whom the external authenticator should be disconnected.</param>
@@ -1157,6 +1711,492 @@ public class UsersClient : MonoCloudClientBase
     };
 
     return ProcessRequestAsync<List<UserSummary>, PageModel>(request, cancellationToken);
+  }
+
+  /// <summary>
+  /// Get all client grants
+  /// </summary>
+  /// <param name="userId">The ID of the user whose grants should be retrieved.</param>
+  /// <param name="page">The page number to retrieve.</param>
+  /// <param name="size">The number of items per page.</param>
+  /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
+  /// <returns>List&lt;UserClientGrants&gt;</returns>
+  /// <exception cref="MonoCloudException">A server side error occurred.</exception>
+  public Task<MonoCloudResponse<List<UserClientGrants>, PageModel>> GetallUserClientGrantsAsync(string userId, int? page = 1, int? size = 10, CancellationToken cancellationToken = default)
+  { 
+    if (userId == null)
+    {
+      throw new ArgumentNullException(nameof(userId));
+    }
+    
+    var encodedUserId = HttpUtility.UrlEncode(userId);
+
+    var urlBuilder = new StringBuilder();
+    urlBuilder.Append($"users/{encodedUserId}/grants/clients?");
+
+    if (page != null)
+    {
+      urlBuilder.Append(Uri.EscapeDataString("page") + "=").Append(HttpUtility.UrlEncode(page.ToString())).Append("&");
+    }
+
+    if (size != null)
+    {
+      urlBuilder.Append(Uri.EscapeDataString("size") + "=").Append(HttpUtility.UrlEncode(size.ToString())).Append("&");
+    }
+
+    urlBuilder.Length--;
+
+    var request = new HttpRequestMessage
+    {
+      Method = new HttpMethod("GET"),
+      RequestUri = new Uri(urlBuilder.ToString(), UriKind.RelativeOrAbsolute),
+      Headers =
+      {
+        { "Accept", "application/json" }
+      }
+    };
+
+    return ProcessRequestAsync<List<UserClientGrants>, PageModel>(request, cancellationToken);
+  }
+
+  /// <summary>
+  /// Get all consents
+  /// </summary>
+  /// <param name="userId">The ID of the user whose consents should be retrieved.</param>
+  /// <param name="page">The page number to retrieve.</param>
+  /// <param name="size">The number of items per page.</param>
+  /// <param name="clientId">The client ID by which the grants should be filtered.</param>
+  /// <param name="sort">Specifies the sort criteria in the &#39;sort_key:sort_order&#39; format. The sort order value can be &#39;1&#39; for ascending and &#39;-1&#39; for descending.  Acceptable sort key values are &#39;creation_time&#39; and &#39;expiration&#39;.</param>
+  /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
+  /// <returns>List&lt;UserConsent&gt;</returns>
+  /// <exception cref="MonoCloudException">A server side error occurred.</exception>
+  public Task<MonoCloudResponse<List<UserConsent>, PageModel>> GetAllUserConsentsAsync(string userId, int? page = 1, int? size = 10, string? clientId = default, string? sort = default, CancellationToken cancellationToken = default)
+  { 
+    if (userId == null)
+    {
+      throw new ArgumentNullException(nameof(userId));
+    }
+    
+    var encodedUserId = HttpUtility.UrlEncode(userId);
+
+    var urlBuilder = new StringBuilder();
+    urlBuilder.Append($"users/{encodedUserId}/grants/consents?");
+
+    if (page != null)
+    {
+      urlBuilder.Append(Uri.EscapeDataString("page") + "=").Append(HttpUtility.UrlEncode(page.ToString())).Append("&");
+    }
+
+    if (size != null)
+    {
+      urlBuilder.Append(Uri.EscapeDataString("size") + "=").Append(HttpUtility.UrlEncode(size.ToString())).Append("&");
+    }
+
+    if (clientId != null)
+    {
+      urlBuilder.Append(Uri.EscapeDataString("clientId") + "=").Append(HttpUtility.UrlEncode(clientId)).Append("&");
+    }
+
+    if (sort != null)
+    {
+      urlBuilder.Append(Uri.EscapeDataString("sort") + "=").Append(HttpUtility.UrlEncode(sort)).Append("&");
+    }
+
+    urlBuilder.Length--;
+
+    var request = new HttpRequestMessage
+    {
+      Method = new HttpMethod("GET"),
+      RequestUri = new Uri(urlBuilder.ToString(), UriKind.RelativeOrAbsolute),
+      Headers =
+      {
+        { "Accept", "application/json" }
+      }
+    };
+
+    return ProcessRequestAsync<List<UserConsent>, PageModel>(request, cancellationToken);
+  }
+
+  /// <summary>
+  /// Get all reference tokens
+  /// </summary>
+  /// <param name="userId">The ID of the user whose tokens should be retrieved.</param>
+  /// <param name="page">The page number to retrieve.</param>
+  /// <param name="size">The number of items per page.</param>
+  /// <param name="clientId">The client ID by which the grants should be filtered.</param>
+  /// <param name="sessionId">The session ID by which the grants should be filtered.</param>
+  /// <param name="sort">Specifies the sort criteria in the &#39;sort_key:sort_order&#39; format. The sort order value can be &#39;1&#39; for ascending and &#39;-1&#39; for descending.  Acceptable sort key values are &#39;creation_time&#39; and &#39;expiration&#39;.</param>
+  /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
+  /// <returns>List&lt;ReferenceToken&gt;</returns>
+  /// <exception cref="MonoCloudException">A server side error occurred.</exception>
+  public Task<MonoCloudResponse<List<ReferenceToken>, PageModel>> GetAllReferenceTokensAsync(string userId, int? page = 1, int? size = 10, string? clientId = default, string? sessionId = default, string? sort = default, CancellationToken cancellationToken = default)
+  { 
+    if (userId == null)
+    {
+      throw new ArgumentNullException(nameof(userId));
+    }
+    
+    var encodedUserId = HttpUtility.UrlEncode(userId);
+
+    var urlBuilder = new StringBuilder();
+    urlBuilder.Append($"users/{encodedUserId}/grants/reference_tokens?");
+
+    if (page != null)
+    {
+      urlBuilder.Append(Uri.EscapeDataString("page") + "=").Append(HttpUtility.UrlEncode(page.ToString())).Append("&");
+    }
+
+    if (size != null)
+    {
+      urlBuilder.Append(Uri.EscapeDataString("size") + "=").Append(HttpUtility.UrlEncode(size.ToString())).Append("&");
+    }
+
+    if (clientId != null)
+    {
+      urlBuilder.Append(Uri.EscapeDataString("clientId") + "=").Append(HttpUtility.UrlEncode(clientId)).Append("&");
+    }
+
+    if (sessionId != null)
+    {
+      urlBuilder.Append(Uri.EscapeDataString("sessionId") + "=").Append(HttpUtility.UrlEncode(sessionId)).Append("&");
+    }
+
+    if (sort != null)
+    {
+      urlBuilder.Append(Uri.EscapeDataString("sort") + "=").Append(HttpUtility.UrlEncode(sort)).Append("&");
+    }
+
+    urlBuilder.Length--;
+
+    var request = new HttpRequestMessage
+    {
+      Method = new HttpMethod("GET"),
+      RequestUri = new Uri(urlBuilder.ToString(), UriKind.RelativeOrAbsolute),
+      Headers =
+      {
+        { "Accept", "application/json" }
+      }
+    };
+
+    return ProcessRequestAsync<List<ReferenceToken>, PageModel>(request, cancellationToken);
+  }
+
+  /// <summary>
+  /// Get all refresh tokens
+  /// </summary>
+  /// <param name="userId">The ID of the user whose tokens should be retrieved.</param>
+  /// <param name="page">The page number to retrieve.</param>
+  /// <param name="size">The number of items per page.</param>
+  /// <param name="clientId">The client ID by which the grants should be filtered.</param>
+  /// <param name="sessionId">The session ID by which the grants should be filtered.</param>
+  /// <param name="sort">Specifies the sort criteria in the &#39;sort_key:sort_order&#39; format. The sort order value can be &#39;1&#39; for ascending and &#39;-1&#39; for descending.  Acceptable sort key values are &#39;creation_time&#39; and &#39;expiration&#39;.</param>
+  /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
+  /// <returns>List&lt;RefreshToken&gt;</returns>
+  /// <exception cref="MonoCloudException">A server side error occurred.</exception>
+  public Task<MonoCloudResponse<List<RefreshToken>, PageModel>> GetAllRefreshTokensAsync(string userId, int? page = 1, int? size = 10, string? clientId = default, string? sessionId = default, string? sort = default, CancellationToken cancellationToken = default)
+  { 
+    if (userId == null)
+    {
+      throw new ArgumentNullException(nameof(userId));
+    }
+    
+    var encodedUserId = HttpUtility.UrlEncode(userId);
+
+    var urlBuilder = new StringBuilder();
+    urlBuilder.Append($"users/{encodedUserId}/grants/refresh_tokens?");
+
+    if (page != null)
+    {
+      urlBuilder.Append(Uri.EscapeDataString("page") + "=").Append(HttpUtility.UrlEncode(page.ToString())).Append("&");
+    }
+
+    if (size != null)
+    {
+      urlBuilder.Append(Uri.EscapeDataString("size") + "=").Append(HttpUtility.UrlEncode(size.ToString())).Append("&");
+    }
+
+    if (clientId != null)
+    {
+      urlBuilder.Append(Uri.EscapeDataString("clientId") + "=").Append(HttpUtility.UrlEncode(clientId)).Append("&");
+    }
+
+    if (sessionId != null)
+    {
+      urlBuilder.Append(Uri.EscapeDataString("sessionId") + "=").Append(HttpUtility.UrlEncode(sessionId)).Append("&");
+    }
+
+    if (sort != null)
+    {
+      urlBuilder.Append(Uri.EscapeDataString("sort") + "=").Append(HttpUtility.UrlEncode(sort)).Append("&");
+    }
+
+    urlBuilder.Length--;
+
+    var request = new HttpRequestMessage
+    {
+      Method = new HttpMethod("GET"),
+      RequestUri = new Uri(urlBuilder.ToString(), UriKind.RelativeOrAbsolute),
+      Headers =
+      {
+        { "Accept", "application/json" }
+      }
+    };
+
+    return ProcessRequestAsync<List<RefreshToken>, PageModel>(request, cancellationToken);
+  }
+
+  /// <summary>
+  /// Get all authorization codes
+  /// </summary>
+  /// <param name="userId">The ID of the user whose authorization codes should be retrieved.</param>
+  /// <param name="page">The page number to retrieve.</param>
+  /// <param name="size">The number of items per page.</param>
+  /// <param name="clientId">The client ID by which the grants should be filtered.</param>
+  /// <param name="sessionId">The session ID by which the grants should be filtered.</param>
+  /// <param name="sort">Specifies the sort criteria in the &#39;sort_key:sort_order&#39; format. The sort order value can be &#39;1&#39; for ascending and &#39;-1&#39; for descending.  Acceptable sort key values are &#39;creation_time&#39; and &#39;expiration&#39;.</param>
+  /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
+  /// <returns>List&lt;AuthorizationCode&gt;</returns>
+  /// <exception cref="MonoCloudException">A server side error occurred.</exception>
+  public Task<MonoCloudResponse<List<AuthorizationCode>, PageModel>> GetAllAuthorizationCodesAsync(string userId, int? page = 1, int? size = 10, string? clientId = default, string? sessionId = default, string? sort = default, CancellationToken cancellationToken = default)
+  { 
+    if (userId == null)
+    {
+      throw new ArgumentNullException(nameof(userId));
+    }
+    
+    var encodedUserId = HttpUtility.UrlEncode(userId);
+
+    var urlBuilder = new StringBuilder();
+    urlBuilder.Append($"users/{encodedUserId}/grants/codes?");
+
+    if (page != null)
+    {
+      urlBuilder.Append(Uri.EscapeDataString("page") + "=").Append(HttpUtility.UrlEncode(page.ToString())).Append("&");
+    }
+
+    if (size != null)
+    {
+      urlBuilder.Append(Uri.EscapeDataString("size") + "=").Append(HttpUtility.UrlEncode(size.ToString())).Append("&");
+    }
+
+    if (clientId != null)
+    {
+      urlBuilder.Append(Uri.EscapeDataString("clientId") + "=").Append(HttpUtility.UrlEncode(clientId)).Append("&");
+    }
+
+    if (sessionId != null)
+    {
+      urlBuilder.Append(Uri.EscapeDataString("sessionId") + "=").Append(HttpUtility.UrlEncode(sessionId)).Append("&");
+    }
+
+    if (sort != null)
+    {
+      urlBuilder.Append(Uri.EscapeDataString("sort") + "=").Append(HttpUtility.UrlEncode(sort)).Append("&");
+    }
+
+    urlBuilder.Length--;
+
+    var request = new HttpRequestMessage
+    {
+      Method = new HttpMethod("GET"),
+      RequestUri = new Uri(urlBuilder.ToString(), UriKind.RelativeOrAbsolute),
+      Headers =
+      {
+        { "Accept", "application/json" }
+      }
+    };
+
+    return ProcessRequestAsync<List<AuthorizationCode>, PageModel>(request, cancellationToken);
+  }
+
+  /// <summary>
+  /// Revoke client grants
+  /// </summary>
+  /// <param name="userId">The ID of the user whose token should be revoked.</param>
+  /// <param name="clientId">The ID of the client whose grants should be revoked.</param>
+  /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
+  /// <returns></returns>
+  /// <exception cref="MonoCloudException">A server side error occurred.</exception>
+  public Task<MonoCloudResponse> RevokeUserClientGrantsAsync(string userId, string clientId, CancellationToken cancellationToken = default)
+  { 
+    if (userId == null)
+    {
+      throw new ArgumentNullException(nameof(userId));
+    }
+    
+    if (clientId == null)
+    {
+      throw new ArgumentNullException(nameof(clientId));
+    }
+    
+    var encodedUserId = HttpUtility.UrlEncode(userId);
+
+    var encodedClientId = HttpUtility.UrlEncode(clientId);
+
+    var urlBuilder = new StringBuilder();
+    urlBuilder.Append($"users/{encodedUserId}/grants/clients/{encodedClientId}?");
+
+    urlBuilder.Length--;
+
+    var request = new HttpRequestMessage
+    {
+      Method = new HttpMethod("DELETE"),
+      RequestUri = new Uri(urlBuilder.ToString(), UriKind.RelativeOrAbsolute),
+    };
+
+    return ProcessRequestAsync(request, cancellationToken);
+  }
+
+  /// <summary>
+  /// Revoke a consent
+  /// </summary>
+  /// <param name="userId">The ID of the user whose consent should be revoked.</param>
+  /// <param name="consentId">The ID of the consent to be revoked.</param>
+  /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
+  /// <returns></returns>
+  /// <exception cref="MonoCloudException">A server side error occurred.</exception>
+  public Task<MonoCloudResponse> RevokeUserConsentAsync(string userId, string consentId, CancellationToken cancellationToken = default)
+  { 
+    if (userId == null)
+    {
+      throw new ArgumentNullException(nameof(userId));
+    }
+    
+    if (consentId == null)
+    {
+      throw new ArgumentNullException(nameof(consentId));
+    }
+    
+    var encodedUserId = HttpUtility.UrlEncode(userId);
+
+    var encodedConsentId = HttpUtility.UrlEncode(consentId);
+
+    var urlBuilder = new StringBuilder();
+    urlBuilder.Append($"users/{encodedUserId}/grants/consents/{encodedConsentId}?");
+
+    urlBuilder.Length--;
+
+    var request = new HttpRequestMessage
+    {
+      Method = new HttpMethod("DELETE"),
+      RequestUri = new Uri(urlBuilder.ToString(), UriKind.RelativeOrAbsolute),
+    };
+
+    return ProcessRequestAsync(request, cancellationToken);
+  }
+
+  /// <summary>
+  /// Revoke a reference token
+  /// </summary>
+  /// <param name="userId">The ID of the user whose token should be revoked.</param>
+  /// <param name="tokenId">The ID of the token to be revoked.</param>
+  /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
+  /// <returns></returns>
+  /// <exception cref="MonoCloudException">A server side error occurred.</exception>
+  public Task<MonoCloudResponse> RevokeReferenceTokenAsync(string userId, string tokenId, CancellationToken cancellationToken = default)
+  { 
+    if (userId == null)
+    {
+      throw new ArgumentNullException(nameof(userId));
+    }
+    
+    if (tokenId == null)
+    {
+      throw new ArgumentNullException(nameof(tokenId));
+    }
+    
+    var encodedUserId = HttpUtility.UrlEncode(userId);
+
+    var encodedTokenId = HttpUtility.UrlEncode(tokenId);
+
+    var urlBuilder = new StringBuilder();
+    urlBuilder.Append($"users/{encodedUserId}/grants/reference_tokens/{encodedTokenId}?");
+
+    urlBuilder.Length--;
+
+    var request = new HttpRequestMessage
+    {
+      Method = new HttpMethod("DELETE"),
+      RequestUri = new Uri(urlBuilder.ToString(), UriKind.RelativeOrAbsolute),
+    };
+
+    return ProcessRequestAsync(request, cancellationToken);
+  }
+
+  /// <summary>
+  /// Revoke a refresh token
+  /// </summary>
+  /// <param name="userId">The ID of the user whose token should be revoked.</param>
+  /// <param name="tokenId">The ID of the token to be revoked.</param>
+  /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
+  /// <returns></returns>
+  /// <exception cref="MonoCloudException">A server side error occurred.</exception>
+  public Task<MonoCloudResponse> RevokeRefreshTokenAsync(string userId, string tokenId, CancellationToken cancellationToken = default)
+  { 
+    if (userId == null)
+    {
+      throw new ArgumentNullException(nameof(userId));
+    }
+    
+    if (tokenId == null)
+    {
+      throw new ArgumentNullException(nameof(tokenId));
+    }
+    
+    var encodedUserId = HttpUtility.UrlEncode(userId);
+
+    var encodedTokenId = HttpUtility.UrlEncode(tokenId);
+
+    var urlBuilder = new StringBuilder();
+    urlBuilder.Append($"users/{encodedUserId}/grants/refresh_tokens/{encodedTokenId}?");
+
+    urlBuilder.Length--;
+
+    var request = new HttpRequestMessage
+    {
+      Method = new HttpMethod("DELETE"),
+      RequestUri = new Uri(urlBuilder.ToString(), UriKind.RelativeOrAbsolute),
+    };
+
+    return ProcessRequestAsync(request, cancellationToken);
+  }
+
+  /// <summary>
+  /// Revoke an authorization code
+  /// </summary>
+  /// <param name="userId">The ID of the user whose authorization code should be revoked.</param>
+  /// <param name="codeId">The ID of the authorization code to be revoked.</param>
+  /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
+  /// <returns></returns>
+  /// <exception cref="MonoCloudException">A server side error occurred.</exception>
+  public Task<MonoCloudResponse> RevokeAuthorizationCodeAsync(string userId, string codeId, CancellationToken cancellationToken = default)
+  { 
+    if (userId == null)
+    {
+      throw new ArgumentNullException(nameof(userId));
+    }
+    
+    if (codeId == null)
+    {
+      throw new ArgumentNullException(nameof(codeId));
+    }
+    
+    var encodedUserId = HttpUtility.UrlEncode(userId);
+
+    var encodedCodeId = HttpUtility.UrlEncode(codeId);
+
+    var urlBuilder = new StringBuilder();
+    urlBuilder.Append($"users/{encodedUserId}/grants/codes/{encodedCodeId}?");
+
+    urlBuilder.Length--;
+
+    var request = new HttpRequestMessage
+    {
+      Method = new HttpMethod("DELETE"),
+      RequestUri = new Uri(urlBuilder.ToString(), UriKind.RelativeOrAbsolute),
+    };
+
+    return ProcessRequestAsync(request, cancellationToken);
   }
 }
 
