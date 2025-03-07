@@ -1403,6 +1403,48 @@ public class UsersClient : MonoCloudClientBase
   }
 
   /// <summary>
+  /// Get a user session
+  /// </summary>
+  /// <param name="userId">The ID of the user whose session should be retrieved.</param>
+  /// <param name="sessionId">The ID of the user session to be retrieved</param>
+  /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
+  /// <returns>UserSession</returns>
+  /// <exception cref="MonoCloudException">A server side error occurred.</exception>
+  public Task<MonoCloudResponse<UserSession>> FindUserSessionEndpointAsync(string userId, string sessionId, CancellationToken cancellationToken = default)
+  { 
+    if (userId == null)
+    {
+      throw new ArgumentNullException(nameof(userId));
+    }
+    
+    if (sessionId == null)
+    {
+      throw new ArgumentNullException(nameof(sessionId));
+    }
+    
+    var encodedUserId = HttpUtility.UrlEncode(userId);
+
+    var encodedSessionId = HttpUtility.UrlEncode(sessionId);
+
+    var urlBuilder = new StringBuilder();
+    urlBuilder.Append($"users/{encodedUserId}/sessions/{encodedSessionId}?");
+
+    urlBuilder.Length--;
+
+    var request = new HttpRequestMessage
+    {
+      Method = new HttpMethod("GET"),
+      RequestUri = new Uri(urlBuilder.ToString(), UriKind.RelativeOrAbsolute),
+      Headers =
+      {
+        { "Accept", "application/json" }
+      }
+    };
+
+    return ProcessRequestAsync<UserSession>(request, cancellationToken);
+  }
+
+  /// <summary>
   /// Revoke a session
   /// </summary>
   /// <param name="userId">The ID of the user whose session should be revoked.</param>
