@@ -31,7 +31,7 @@ public class AuthorizationCode
    /// <summary>
    /// A list of scopes that were requested.
    /// </summary>
-   public List<string> RequestedScopes { get; set; }
+   public List<string> AuthorizedScopes { get; set; }
 
    /// <summary>
    /// The time (in Epoch) at which the code will expire.
