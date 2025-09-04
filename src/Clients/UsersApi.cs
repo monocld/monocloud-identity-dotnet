@@ -1410,7 +1410,7 @@ public class UsersClient : MonoCloudClientBase
   /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
   /// <returns>UserSession</returns>
   /// <exception cref="MonoCloudException">A server side error occurred.</exception>
-  public Task<MonoCloudResponse<UserSession>> FindUserSessionEndpointAsync(string userId, string sessionId, CancellationToken cancellationToken = default)
+  public Task<MonoCloudResponse<UserSession>> FindUserSessionAsync(string userId, string sessionId, CancellationToken cancellationToken = default)
   { 
     if (userId == null)
     {
