@@ -79,9 +79,14 @@ public class UserSummary
    public DateTime? PasswordUpdatedAt { get; set; }
 
    /// <summary>
-   /// Specifies whether the user has been locked out.
+   /// Specifies the time (in Epoch) at which the user will be unblocked.
    /// </summary>
-   public bool Blocked { get; set; }
+   public long? BlockUntil { get; set; }
+
+   /// <summary>
+   /// Total number of sign-in failures since the last sign-in was successful.
+   /// </summary>
+   public int FailureCount { get; set; }
 
    /// <summary>
    /// Total number of sign-in attempts.
